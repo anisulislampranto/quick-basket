@@ -11,9 +11,11 @@ import Link from 'next/link';
 import { FaGoogle } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 
 
 export default function AuthenticationClient() {
+    const { googleLogin, loading, error } = useGoogleOAuthLogin();
     const pathname = usePathname();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -72,15 +74,15 @@ export default function AuthenticationClient() {
                             </div>
 
                             <div className=' flex flex-wrap justify-center gap-10'>
-                                <div className=' border border-black p-1 hover:bg-black hover:text-white'>
+                                <button type='button' onClick={googleLogin} className=' border border-black p-1 hover:bg-black hover:text-white'>
                                     <FaGoogle className='w-8 h-8 ' />
-                                </div>
-                                <div className=' border border-black p-1 hover:bg-black hover:text-white'>
+                                </button>
+                                <button type='button' className=' border border-black p-1 hover:bg-black hover:text-white'>
                                     <FaFacebookF className='w-8 h-8 ' />
-                                </div>
-                                <div className=' border border-black p-1 hover:bg-black hover:text-white'>
+                                </button>
+                                <button type='button' className=' border border-black p-1 hover:bg-black hover:text-white'>
                                     <FaGithub className='w-8 h-8' />
-                                </div>
+                                </button>
                             </div>
 
                         </form>
