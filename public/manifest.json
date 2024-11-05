@@ -21,6 +21,6 @@
     "lang": "en-GB",
     "name": "Quick Basket",
     "short_name": "Quick-Basket",
-    "start_url": "http://localhost:3000",
-    "scope": "http://localhost:3000"
+    "start_url": "https://quick-basket.vercel.app",
+    "scope": "https://quick-basket.vercel.app"
 }
