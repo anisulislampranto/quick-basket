@@ -1,4 +1,5 @@
 import "./globals.css";
+import localFont from "next/font/local";
 
 export const metadata = {
   title: "Quick Basket",
@@ -6,10 +7,15 @@ export const metadata = {
     "Quick Basket - Focuses on a fast, efficient shopping experience.",
 };
 
+const montserrat = localFont({
+  src: "../../public/fonts/montserrat/Montserrat-Medium.ttf",
+  variable: "--font-montserrat",
+});
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={``}>{children}</body>
+      <body className={montserrat.variable}>{children}</body>
     </html>
   );
 }
