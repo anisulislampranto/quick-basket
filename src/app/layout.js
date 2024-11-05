@@ -15,7 +15,9 @@ const montserrat = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={montserrat.variable}>{children}</body>
+      <body className={`${montserrat.variable} font-montserrat`}>
+        {children}
+      </body>
     </html>
   );
 }
