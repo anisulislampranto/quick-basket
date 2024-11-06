@@ -12,18 +12,23 @@ import { FaGoogle } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
+import { useSelector } from 'react-redux';
 
 
 export default function AuthenticationClient() {
     const { googleLogin, loading, error } = useGoogleOAuthLogin();
+    const user = useSelector((state) => state.users)
     const pathname = usePathname();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = data => console.log(data);
 
+    console.log('user', user);
+
 
     return (
         <div className=' flex items-center justify-center w-screen h-screen py-10 p-5'>
+            <p>{user?.name}</p>
             <DropBorder>
                 <div className='max-w-4xl mx-auto flex flex-col md:flex-row gap-10 items-center bg-white p-3 md:p-14'>
                     <div className=' flex flex-col items-center w-full md:w-[55%]'>

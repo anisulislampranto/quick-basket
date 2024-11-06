@@ -1,9 +1,14 @@
+"use client";
+
+import { setUser } from "@/lib/features/users/usersSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const useGoogleOAuthLogin = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,10 +23,10 @@ const useGoogleOAuthLogin = () => {
         );
         const data = await result.json();
 
-        console.log("data", data);
-
         if (result.ok) {
-          console.log("data", data);
+          console.log("dataaaa", data);
+
+          dispatch(setUser(data));
 
           // setUser({ token: data.token, ...data.user });
           //   router.push("/profile");
