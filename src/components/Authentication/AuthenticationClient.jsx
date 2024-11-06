@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation'
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../../assets/quick-basket.png'
 import { useForm } from 'react-hook-form';
 import Button from '../ui/Button';
@@ -13,22 +13,27 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 
 export default function AuthenticationClient() {
     const { googleLogin, loading, error } = useGoogleOAuthLogin();
-    const user = useSelector((state) => state.users)
+    const {user, isLoading} = useSelector((state) => state.user)
     const pathname = usePathname();
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = data => console.log(data);
 
-    console.log('user', user);
-
+    useEffect(() => {
+        if (user && !isLoading) {
+            router.back()
+        }
+    }, [user, isLoading])
+    
 
     return (
         <div className=' flex items-center justify-center w-screen h-screen py-10 p-5'>
-            <p>{user?.name}</p>
             <DropBorder>
                 <div className='max-w-4xl mx-auto flex flex-col md:flex-row gap-10 items-center bg-white p-3 md:p-14'>
                     <div className=' flex flex-col items-center w-full md:w-[55%]'>
