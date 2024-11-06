@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import localFont from "next/font/local";
 import { StoreProvider } from "@/lib/StoreProvider";
 import HeaderClient from "@/components/global/Header";
+import GlobalLoader from "@/utils/GlobalLoader";
 
 export const metadata = {
   title: "Quick Basket",
@@ -21,8 +22,10 @@ export default function RootLayout({ children }) {
       <body className={`${montserrat.variable} font-montserrat`}>
         <StoreProvider>
           <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>
-            <HeaderClient />
-            {children}
+            <GlobalLoader>
+              <HeaderClient />
+              {children}
+            </GlobalLoader>
           </GoogleOAuthProvider>
         </StoreProvider>
       </body>
