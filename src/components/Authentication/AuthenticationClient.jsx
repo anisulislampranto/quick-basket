@@ -28,8 +28,6 @@ export default function AuthenticationClient() {
     const {userType} = useSelector((state) => state.user);
     const [btnState, setBtnState] = useState('');
 
-    console.log('user on authentication', user);
-    
 
     const onSubmit = async (data) => {
         setBtnState('loading'); 
@@ -48,12 +46,11 @@ export default function AuthenticationClient() {
             body: JSON.stringify(userInfo)      
           }
     
-          const res  = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup`, options);
+          const res  = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth${pathname}`, options);
     
           const userData = await res.json();
 
           console.log('res', res);
-          
     
           if (res.status === 401) {
               setBtnState('failed');
