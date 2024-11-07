@@ -9,9 +9,6 @@ export default function HeaderClient() {
     const user =  useSelector((state) => state.user)
     const dispatch = useDispatch();
 
-    console.log('userHeader', user);
-    
-
     useEffect(() => {
         dispatch(fetchMe())
     }, []);

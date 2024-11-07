@@ -36,8 +36,6 @@ export default function AuthenticationClient() {
             type: userType
           }
 
-          console.log('userInfo', userInfo);
-
           const options = {
             method: "POST",
             headers: {
@@ -50,8 +48,6 @@ export default function AuthenticationClient() {
     
           const userData = await res.json();
 
-          console.log('res', res);
-    
           if (res.status === 401) {
               setBtnState('failed');
               alert("User doesn't exist")
@@ -136,7 +132,7 @@ export default function AuthenticationClient() {
                             <Image className=' absolute object-contain' src={Logo} alt='SignUpImage' fill />
                         </div>
                         <div className=' text-center space-y-3'>
-                            <h1 className='text-5xl font-bold'>Sign In</h1>
+                            <h1 className='text-5xl font-bold'>{pathname === '/signin' ? 'Sign In' : 'Sign Up'}</h1>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, molestias iure. Animi, adipisci. Quisquam facilis atque laboriosam reiciendis. Ea, totam.</p>
                         </div>
                     </div>

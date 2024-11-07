@@ -26,8 +26,6 @@ const useGoogleOAuthLogin = () => {
         const data = await result.json();
 
         if (result.ok) {
-          console.log("dataGoogle", data);
-
           localStorage.setItem("token", data.token);
           dispatch(setUser({ ...data.user, token: data.token }));
 
