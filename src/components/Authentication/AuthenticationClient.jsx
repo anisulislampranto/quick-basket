@@ -15,7 +15,7 @@ import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setUser, setUserType } from '@/lib/features/user/userSlice';
+import { setUser } from '@/lib/features/user/userSlice';
 
 
 export default function AuthenticationClient() {
@@ -25,18 +25,18 @@ export default function AuthenticationClient() {
     const pathname = usePathname();
     const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const {userType} = useSelector((state) => state.user);
     const [btnState, setBtnState] = useState('');
-
+    const [userType, setUserType] = useState('customer');
 
     const onSubmit = async (data) => {
         setBtnState('loading'); 
         try {
-
           const userInfo  = {
             ...data,
             type: userType
           }
+
+          console.log('userInfo', userInfo);
 
           const options = {
             method: "POST",
@@ -62,8 +62,8 @@ export default function AuthenticationClient() {
     
             if (res.status === 403) {
               setBtnState('');
-              alert('Already have an account try login')
-              router.push('login')
+              alert('Already have an account try Sign In')
+              router.push('signin')
           }
     
           if (userData.data?.email) {
@@ -147,14 +147,14 @@ export default function AuthenticationClient() {
                             <div className="flex bg-black p-1 mb-4">
                                 <button
                                     type="button"
-                                    onClick={() => dispatch(setUserType('customer'))}
+                                    onClick={() => setUserType('customer')}
                                     className={`flex-1 p-1 ${userType === 'customer' ? 'bg-white text-black' : ' bg-black text-white'}`}
                                 >
                                     Customer
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => dispatch(setUserType('seller'))}
+                                    onClick={() => setUserType('seller')}
                                     className={`flex-1 p-1 ${userType === 'seller' ? 'bg-white text-black' : 'bg-black text-white'}`}
                                 >
                                     Seller

@@ -10,7 +10,6 @@ const initialState = {
   isError: false,
   user: [],
   error: null,
-  userType: "customer",
 };
 
 export const fetchMe = createAsyncThunk("user/fetchMe", async () => {
@@ -23,9 +22,6 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserType: (state, action) => {
-      state.userType = action.payload;
-    },
     setUser: (state, action) => {
       state.user = action.payload;
     },
