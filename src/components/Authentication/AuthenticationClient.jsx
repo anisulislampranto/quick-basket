@@ -15,7 +15,7 @@ import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setUserType } from '@/lib/features/user/userSlice';
+import { setUser, setUserType } from '@/lib/features/user/userSlice';
 
 
 export default function AuthenticationClient() {
@@ -25,10 +25,70 @@ export default function AuthenticationClient() {
     const pathname = usePathname();
     const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const {userType} = useSelector((state) => state.user)
+    const {userType} = useSelector((state) => state.user);
+    const [btnState, setBtnState] = useState('');
 
+    console.log('user on authentication', user);
+    
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = async (data) => {
+        setBtnState('loading'); 
+        try {
+
+          const userInfo  = {
+            ...data,
+            type: userType
+          }
+
+          const options = {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify(userInfo)      
+          }
+    
+          const res  = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup`, options);
+    
+          const userData = await res.json();
+
+          console.log('res', res);
+          
+    
+          if (res.status === 401) {
+              setBtnState('failed');
+              alert("User doesn't exist")
+              setTimeout(() => {
+                setBtnState('') 
+            }, 2000);
+          }
+    
+            if (res.status === 403) {
+              setBtnState('');
+              alert('Already have an account try login')
+              router.push('login')
+          }
+    
+          if (userData.data?.email) {
+    
+            localStorage.setItem('token', userData.data.token)
+            // localStorage.setItem('user', JSON.stringify(userData.data));
+            dispatch(setUser(userData.data))
+
+            setBtnState('success');
+            setTimeout(() => {
+                setBtnState('');
+            }, 2000);
+          } 
+
+        } catch (error) {
+            setBtnState('failed')
+            setTimeout(() => {
+                setBtnState('') 
+            }, 2000);
+            console.log('error', error);
+        }
+    };
 
     // const handleLogin = async (provider) => {
     //     try {
@@ -63,7 +123,9 @@ export default function AuthenticationClient() {
 
     useEffect(() => {
         if (user?.email && !isLoading) {
-            router.back()
+            setTimeout(() => {
+                router.back()
+            }, 2000);
         }
     }, [user, isLoading])
     
