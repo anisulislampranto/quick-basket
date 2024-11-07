@@ -25,39 +25,39 @@ export default function AuthenticationClient() {
 
     const onSubmit = data => console.log(data);
 
-    const handleLogin = async (provider) => {
-        try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/${provider}`, {
-            method: "GET",
-            credentials: "include",
-          });
+    // const handleLogin = async (provider) => {
+    //     try {
+    //       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/${provider}`, {
+    //         method: "GET",
+    //         credentials: "include",
+    //       });
     
-          if (!response.ok) throw new Error("Login failed");
+    //       if (!response.ok) throw new Error("Login failed");
     
-          const data = await response.json();
+    //       const data = await response.json();
 
-          console.log('dataGithub', data);
+    //       console.log('dataGithub', data);
 
-          const { token, user } = data;
+    //       const { token, user } = data;
     
-          // Save token to local storage
-          localStorage.setItem("token", token);
+    //       // Save token to local storage
+    //       localStorage.setItem("token", token);
     
-          // Optionally store user data if needed
-          console.log("User Data:", user);
+    //       // Optionally store user data if needed
+    //       console.log("User Data:", user);
 
-        } catch (error) {
-          console.error("Error logging in:", error);
-        }
-      };
+    //     } catch (error) {
+    //       console.error("Error logging in:", error);
+    //     }
+    //   };
 
-    //   const handleLoginRedirect = (provider) => {
+    //   const handleLogin = (provider) => {
     //     // Redirect the user to the backend OAuth endpoint
     //     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/${provider}`;
     //   };
 
     useEffect(() => {
-        if (user.email && !isLoading) {
+        if (user?.email && !isLoading) {
             router.back()
         }
     }, [user, isLoading])
@@ -115,15 +115,15 @@ export default function AuthenticationClient() {
                             </div>
 
                             <div className=' flex flex-wrap justify-center gap-10'>
-                                <button type='button' onClick={googleLogin} className=' border border-black p-1 hover:bg-black hover:text-white'>
-                                    <FaGoogle className='w-8 h-8 ' />
+                                <button type='button' onClick={googleLogin} className='flex gap-2 items-center border border-black p-2 hover:bg-black hover:text-white'>
+                                    <span className=' text-xl'>Login With</span> <FaGoogle className='w-8 h-8 ' /> 
                                 </button>
-                                <button type='button' className=' border border-black p-1 hover:bg-black hover:text-white'>
+                                {/* <button type='button' className=' border border-black p-1 hover:bg-black hover:text-white'>
                                     <FaFacebookF className='w-8 h-8 ' />
                                 </button>
                                 <button onClick={()=> handleLogin('github')} type='button' className=' border border-black p-1 hover:bg-black hover:text-white'>
                                     <FaGithub className='w-8 h-8' />
-                                </button>
+                                </button> */}
                             </div>
 
                         </form>
