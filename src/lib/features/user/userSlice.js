@@ -14,6 +14,7 @@ const initialState = {
 
 export const fetchMe = createAsyncThunk("user/fetchMe", async () => {
   const data = await getMe();
+
   return data.data;
 });
 

@@ -14,7 +14,7 @@ export default function HeaderClient() {
 
     useEffect(() => {
         dispatch(fetchMe())
-    }, [dispatch]);
+    }, []);
 
 
     return (
