@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/quick-basket.png'
 import { useForm } from 'react-hook-form';
 import Button from '../ui/Button';
@@ -14,14 +14,19 @@ import { FaGithub } from "react-icons/fa";
 import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setUserType } from '@/lib/features/user/userSlice';
 
 
 export default function AuthenticationClient() {
+    const dispatch = useDispatch();
     const { googleLogin, loading, error } = useGoogleOAuthLogin();
     const {user, isLoading} = useSelector((state) => state.user)
     const pathname = usePathname();
     const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const {userType} = useSelector((state) => state.user)
+
 
     const onSubmit = data => console.log(data);
 
@@ -78,6 +83,26 @@ export default function AuthenticationClient() {
                     </div>
 
                     <div className=' w-full md:w-[40%]'>
+                        {
+                            pathname === '/signup' && 
+                            <div className="flex bg-black p-1 mb-4">
+                                <button
+                                    type="button"
+                                    onClick={() => dispatch(setUserType('customer'))}
+                                    className={`flex-1 p-1 ${userType === 'customer' ? 'bg-white text-black' : ' bg-black text-white'}`}
+                                >
+                                    Customer
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => dispatch(setUserType('seller'))}
+                                    className={`flex-1 p-1 ${userType === 'seller' ? 'bg-white text-black' : 'bg-black text-white'}`}
+                                >
+                                    Seller
+                                </button>
+                            </div>
+                        }
+
                         <form onSubmit={handleSubmit(onSubmit)} className=' flex flex-col gap-3'>
                             {
                                 pathname === '/signup' && 

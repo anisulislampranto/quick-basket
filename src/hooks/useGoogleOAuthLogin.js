@@ -4,6 +4,7 @@ import { setUser } from "@/lib/features/user/userSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const useGoogleOAuthLogin = () => {
@@ -11,6 +12,7 @@ const useGoogleOAuthLogin = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { userType } = useSelector((state) => state.user);
 
   const handleResponse = async (authResult) => {
     setLoading(true);
@@ -19,7 +21,7 @@ const useGoogleOAuthLogin = () => {
     try {
       if (authResult.code) {
         const result = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google?code=${authResult.code}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google?code=${authResult.code}&type=${userType}`
         );
         const data = await result.json();
 
