@@ -34,7 +34,7 @@ export default function MyShopClient() {
         <>
             {
                 (user?.type === 'seller' && !user?.shop) ? 
-                <div className=' flex items-center justify-center w-screen h-[95vh] py-10 p-5'>
+                <div className=' flex items-start justify-center w-screen h-full py-10 md:py-20 px-10'>
                     <AddShopClient />
                 </div> 
                 : (user?.email && user?.shop) &&

@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { fetchMe } from "@/lib/features/user/userSlice";
 
 const useAddShop = () => {
-  const router = useRouter();
+  const dispatch = useDispatch();
   const [addShopLoading, setAddShopLoading] = useState(false);
   const [addShopError, setAddShopError] = useState(null);
+  const [addShopSuccess, setAddShopSuccess] = useState(false);
 
   const handleAddShop = async (data) => {
     const token = localStorage.getItem("token");
@@ -32,19 +35,26 @@ const useAddShop = () => {
       const createdShop = await res.json();
 
       if (res.ok) {
-        router.reload(window.location.pathname);
+        setAddShopSuccess(true);
+        dispatch(fetchMe());
       } else {
         setAddShopError(createdShop.message || "Failed to create shop");
+        setTimeout(() => {
+          setAddShopError(null);
+        }, 3000);
       }
     } catch (err) {
       setAddShopError("An error occurred");
       console.error(err);
+      setTimeout(() => {
+        setAddShopError(null);
+      }, 3000);
     } finally {
       setAddShopLoading(false);
     }
   };
 
-  return { handleAddShop, addShopLoading, addShopError };
+  return { handleAddShop, addShopLoading, addShopError, addShopSuccess };
 };
 
 export default useAddShop;
