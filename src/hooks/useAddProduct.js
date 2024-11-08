@@ -1,9 +1,12 @@
 "use client";
 
+import { fetchMe } from "@/lib/features/user/userSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const useAddProduct = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [addProductLoading, setAddProductLoading] = useState(false);
   const [addProductError, setAddProductError] = useState(null);
@@ -48,16 +51,23 @@ const useAddProduct = () => {
 
       if (res.ok) {
         setAddProductSuccess(true);
+        dispatch(fetchMe());
 
         setTimeout(() => {
           setAddProductSuccess(false);
         }, 3000);
       } else {
         setAddProductError(result.message || "Failed to add product");
+        setTimeout(() => {
+          setAddProductError(null);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error adding product:", error);
       setAddProductError("An error occurred. Please try again later.");
+      setTimeout(() => {
+        setAddProductError(null);
+      }, 3000);
     } finally {
       setAddProductLoading(false);
     }

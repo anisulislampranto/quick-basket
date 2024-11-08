@@ -45,7 +45,7 @@ export default function AddProductClient() {
 
                 <div>
                     {
-                        addProductLoading ? <Loader2 />  : (addProductError && !addProductLoading) ? <p className=' text-center text-2xl md:text-5xl text-red-600'>addProductError</p> : (addProductSuccess && !addProductLoading) ? <h1 className=' text-center text-2xl md:text-5xl text-green-600'>Product Added Successfully!</h1> :  
+                        addProductLoading ? <Loader2 />  : (addProductError && !addProductLoading) ? <p className=' text-center text-2xl md:text-5xl text-red-600 py-20'>{addProductError}</p> : (addProductSuccess && !addProductLoading) ? <h1 className=' py-20 text-center text-2xl md:text-5xl text-green-600'>Product Added Successfully!</h1> :  
                             <form onSubmit={handleSubmit(handleAddProduct)} className=' max-w-4xl mx-auto flex flex-col gap-3 py-5 px-10'>
                                 <div className=' flex flex-wrap gap-5 justify-between'>
                                     <div className=' flex flex-col w-full md:w-[46%]'>
@@ -56,9 +56,9 @@ export default function AddProductClient() {
 
                                     <div className=' flex flex-col w-full md:w-[46%]'>
                                         <label htmlFor="category">Category</label>
-                                        <select {...register("category", {required: 'Category is required'})} className=' border p-2 border-black w-full'>
+                                        <select {...register("category", {required: 'Category is required'})} className=' border p-[.6rem] border-black w-full'>
                                             {categories.map((el) => 
-                                                <option value={el.value}>{el.label}</option>
+                                                <option key={el.value} value={el.value}>{el.label}</option>
                                             )}
                                         </select>
                                     </div>
@@ -76,7 +76,7 @@ export default function AddProductClient() {
                                     <label htmlFor="images">Images</label>
                                     <input
                                         type='file'
-                                        className='border p-2'
+                                        className='border border-black p-2'
                                         accept="image/*"
                                         multiple
                                         {...register("images", { required: 'At least one image is required' })}
