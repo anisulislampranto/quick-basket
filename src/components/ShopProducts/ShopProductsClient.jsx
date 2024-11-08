@@ -14,7 +14,7 @@ function CategoryProducts({ title, products }) {
         <DropBorder>
             <h1 className=' text-sm'>{title}</h1>
         </DropBorder>
-        <ul className="flex flex-wrap justify-center md:overflow-scroll gap-10">
+        <ul className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10">
           {products.map((el) => (
             <li key={el._id} className="border-2 border-transparent p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out">
               
