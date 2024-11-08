@@ -6,6 +6,7 @@ import useAddShop from '@/hooks/useAddShop';
 import { GiShop } from "react-icons/gi";
 import { useForm } from 'react-hook-form';
 import Button from '@/components/ui/Button';
+import Image from 'next/image';
 
 
 export default function AddShopClient() {
