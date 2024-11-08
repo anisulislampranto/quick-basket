@@ -4,11 +4,11 @@ import DropBorder from '../ui/DropBorder';
 
 function CategoryProducts({ title, products }) {
   return (
-    <div className="space-y-5 mt-10 overflow-scroll">
+    <div className="space-y-5 mt-10">
         <DropBorder>
             <h1 className=' text-sm'>{title}</h1>
         </DropBorder>
-      <ul className="flex overflow-scroll gap-10">
+      <ul className="flex flex-wrap justify-center md:overflow-scroll gap-10">
         {products.map((el) => (
           <li key={el._id} className="border-2 border-transparent p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out">
             <div className="relative h-40 w-40">

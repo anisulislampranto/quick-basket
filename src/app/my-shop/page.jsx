@@ -13,9 +13,6 @@ import DropBorder from '@/components/ui/DropBorder';
 export default function MyShopClient() {
     const {user, isLoading} = useSelector((state) => state.user);
 
-    console.log('user', user);
-    console.log('isLoading', isLoading);
-    
 
     return (
         <>
@@ -26,19 +23,19 @@ export default function MyShopClient() {
                 </div> 
                 : (user?.email && user?.shop) &&
                 <div className=' flex flex-col container mx-auto relative'>
-                    <div className=' relative h-44 sm:h-64 md:h-72 lg:h-96 w-full'>
+                    <div className=' relative h-56 sm:h-64 md:h-72 lg:h-96 w-full'>
                         <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black"></span>
                         <span className="absolute inset-0 w-full h-full bg-white border-2 border-black "></span>
                         <Image className=' absolute object-cover' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.coverImage}`} alt='ShopImage' fill />
                     </div>
 
-                    <div className=' ml-6 absolute bottom-20 md:bottom-28 flex flex-col md:flex-row backdrop-blur-md text-white border border-white max-w-[80%]'>
-                        <div className=' h-28 w-28 md:h-44 md:w-80 relative'>
+                    <div className=' ml-6 absolute bottom-20 md:bottom-28 flex flex-col md:gap-5 md:flex-row backdrop-blur-md text-white border border-white max-w-[80%] py-2'>
+                        <div className=' left-5 h-14 w-14 md:h-40 md:w-80 relative'>
                             <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.logo}`} alt='ShopImage' fill />
                         </div>
-                        <div className=' flex flex-col py-2 gap-5 mt-2 px-5 '>
-                            <h1 className=' text-lg sm:text-3xl md:text-4xl lg:text-5xl font-bold'>{user?.shop?.name}</h1>
-                            <p>{user?.shop?.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus ab magni perspiciatis optio consequatur suscipit quo deleniti architecto nobis!</p>
+                        <div className=' flex flex-col justify-center md:gap-2 pb-2 px-5 '>
+                            <h1 className=' text-lg sm:text-3xl md:text-3xl lg:text-5xl font-bold'>{user?.shop?.name}</h1>
+                            <p className='text-xs md:text-sm line-clamp-2'>{user?.shop?.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus ab magni perspiciatis optio consequatur suscipit quo deleniti architecto nobis!</p>
                         </div>
                     </div>
 
