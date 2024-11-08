@@ -47,7 +47,7 @@ export default function HeaderClient() {
     return (
         <>
             <div className=' sticky top-0 z-50 bg-white shadow'>
-                    <div className=' flex items-center justify-between text-black lg:bg-transparent p-3 gap-5 relative md:px-24'>
+                    <div className=' flex items-center justify-between text-black lg:bg-transparent px-5 gap-5 relative md:px-24'>
                         <Link href={'/'} className=' relative h-24 w-24'>
                             <Image src={logo} alt='logo' fill className=' absolute object-cover' quality={50} />
                         </Link>

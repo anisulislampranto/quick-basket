@@ -1,15 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import AddProductClient from '@/components/AddProduct/AddProduct';
 import AddShopClient from '@/components/AddShop/AddShop';
 import ShopProductsClient from '@/components/ShopProducts/ShopProductsClient';
+import { useRouter } from 'next/navigation';
 
 
 export default function MyShopClient() {
     const {user, isLoading} = useSelector((state) => state.user);
+    const router = useRouter()
+
+    useEffect(() => {
+
+        if (!user || !user?.email) {
+            router.push('/signup')
+        }
+
+        if (user && user?.email && user.type !== 'seller') {
+            router.back()
+        }
+
+    }, [user])
+
+    if (user && user?.email && user.type !== 'seller') {
+       return <div className=' text-center mt-[20%]'>Only Seller Has the access to this page</div>
+    }
+
 
     return (
         <>
