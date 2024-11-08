@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import Loader2 from '@/utils/Loader2';
 
 
-const categories = [
+export const categories = [
     {
         label: 'Electronics & Gadgets',
         value: 'electronics&Gadgets'
@@ -103,7 +103,6 @@ export default function AddProductClient() {
                                 </div>
                             </form>
                     }
-
                 </div>
             </DrawerContent>
         </Drawer>

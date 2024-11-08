@@ -1,6 +1,12 @@
 import Image from 'next/image';
 import React from 'react';
 import DropBorder from '../ui/DropBorder';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import { FaEdit } from "react-icons/fa";
+import EditProduct from '../EditProduct/EditProduct';
+
+
 
 function CategoryProducts({ title, products }) {
   return (
@@ -8,18 +14,24 @@ function CategoryProducts({ title, products }) {
         <DropBorder>
             <h1 className=' text-sm'>{title}</h1>
         </DropBorder>
-      <ul className="flex flex-wrap justify-center md:overflow-scroll gap-10">
-        {products.map((el) => (
-          <li key={el._id} className="border-2 border-transparent p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out">
-            <div className="relative h-40 w-40">
-              <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
-            </div>
-            <div>
-              <h2>{el.name}</h2>
-            </div>
-          </li>
-        ))}
-      </ul>
+        <ul className="flex flex-wrap justify-center md:overflow-scroll gap-10">
+          {products.map((el) => (
+            <li key={el._id} className="border-2 border-transparent p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out">
+              
+              <div className="relative h-40 w-40">
+                <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
+                {/* Edit Product Modal */}
+                <Modal openButton={<button className=' border border-black p-1 bg-white absolute -top-3 -right-3'><FaEdit className=' w-5 h-5' /></button>}>
+                  <EditProduct product={el} />
+                </Modal>
+                {/* Edit Product Modal */}
+              </div>
+              <div>
+                <h2>{el.name}</h2>
+              </div>
+            </li>
+          ))}
+        </ul>
     </div>
   );
 }
@@ -39,9 +51,9 @@ export default function ShopProductsClient({ products }) {
         <DropBorder>
             <h1 className="text-2xl">Products</h1>
         </DropBorder>
-      {categories.map((category) => (
-        <CategoryProducts key={category.title} title={category.title} products={category.products} />
-      ))}
+        {categories.map((category) => (
+          <CategoryProducts key={category.title} title={category.title} products={category.products} />
+        ))}
     </div>
   );
 }

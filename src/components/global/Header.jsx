@@ -27,7 +27,7 @@ const navLinks = [
     },
     {
         label: 'My Shop',
-        url: '/my-college'
+        url: '/my-shop'
     },
 ]
 

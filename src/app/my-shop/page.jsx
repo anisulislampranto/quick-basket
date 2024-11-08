@@ -5,14 +5,11 @@ import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import AddProductClient from '@/components/AddProduct/AddProduct';
 import AddShopClient from '@/components/AddShop/AddShop';
-import { useRouter } from 'next/navigation';
 import ShopProductsClient from '@/components/ShopProducts/ShopProductsClient';
-import DropBorder from '@/components/ui/DropBorder';
 
 
 export default function MyShopClient() {
     const {user, isLoading} = useSelector((state) => state.user);
-
 
     return (
         <>
