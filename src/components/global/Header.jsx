@@ -38,7 +38,7 @@ export default function HeaderClient() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (user.length === 0) {
+        if (user?.length === 0) {
             dispatch(fetchMe());
         }
     }, [dispatch, user]);
