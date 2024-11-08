@@ -28,16 +28,17 @@ export default function MyShopClient() {
                         <Image className=' absolute object-cover' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.coverImage}`} alt='ShopImage' fill />
                     </div>
 
-                    <div className=' ml-6 absolute bottom-20 md:bottom-28 h-28 w-28 md:h-44 md:w-44 border-4 border-white backdrop-blur-md'>
-                        <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.logo}`} alt='ShopImage' fill />
+                    <div className=' ml-6 absolute bottom-20 md:bottom-28 flex flex-col md:flex-row backdrop-blur-md border-4 border-white text-white max-w-[80%]'>
+                        <div className=' h-28 w-28 md:h-44 md:w-80 relative'>
+                            <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.logo}`} alt='ShopImage' fill />
+                        </div>
+                        <div className=' flex flex-col py-2 gap-5 mt-2 px-5 '>
+                            <h1 className=' text-lg sm:text-3xl md:text-4xl lg:text-5xl font-bold'>{user?.shop?.name}</h1>
+                            <p>{user?.shop?.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus ab magni perspiciatis optio consequatur suscipit quo deleniti architecto nobis!</p>
+                        </div>
                     </div>
 
-                    <div className=' flex justify-between items-start'>
-                        <div className=' flex flex-col gap-1 mt-2 px-5 max-w-[70%]'>
-                            <h1 className=' text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>{user?.shop?.name}</h1>
-                            {/* <p>{user?.shop?.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi doloribus ab magni perspiciatis optio consequatur suscipit quo deleniti architecto nobis!</p> */}
-                        </div>
-
+                    <div className=' flex justify-end items-end'>
                         <div className=' flex items-end mt-5'>
                             <AddProductClient />
                         </div>
