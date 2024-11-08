@@ -13,6 +13,10 @@ import DropBorder from '@/components/ui/DropBorder';
 export default function MyShopClient() {
     const {user, isLoading} = useSelector((state) => state.user);
 
+    console.log('user', user);
+    console.log('isLoading', isLoading);
+    
+
     return (
         <>
             {
