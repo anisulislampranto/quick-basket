@@ -5,6 +5,7 @@ import Modal from '../ui/Modal';
 import Button from '../ui/Button';
 import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
+import DrawerWrapper from '../ui/DrawerWrapper';
 
 
 
@@ -20,11 +21,11 @@ function CategoryProducts({ title, products }) {
               
               <div className="relative h-40 w-40">
                 <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
-                {/* Edit Product Modal */}
-                <Modal openButton={<button className=' border border-black p-1 bg-white absolute -top-3 -right-3'><FaEdit className=' w-5 h-5' /></button>}>
+                {/* Edit Product Drawer */}
+                <DrawerWrapper heading={'Edit Product'} subHeading={'Edit Product of your shop.'} openButton={<button className=' border border-black p-1 bg-white absolute -top-3 -right-3'><FaEdit className=' w-5 h-5' /></button>}>
                   <EditProduct product={el} />
-                </Modal>
-                {/* Edit Product Modal */}
+                </DrawerWrapper>
+                {/* Edit Product Drawer */}
               </div>
               <div>
                 <h2>{el.name}</h2>

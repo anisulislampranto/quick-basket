@@ -12,10 +12,6 @@ export default function EditProduct({product}) {
 
     return (
         <>
-            <DrawerHeader>
-                <DrawerTitle className=' text-center'>Edit Product</DrawerTitle>
-                <DrawerDescription className=' text-center'>Edit Product of your shop.</DrawerDescription>
-            </DrawerHeader>
             {
                 editProductLoading ? <Loader2 /> : (editProductError && !editProductLoading) ? <p className=' text-center text-2xl md:text-5xl text-red-600 py-20'>{editProductError}</p> : (editProductSuccess && !editProductLoading) ? <h1 className=' py-20 text-center text-2xl md:text-5xl text-green-600'>Product Edited Successfully!</h1> : 
                 <form onSubmit={handleSubmit((data) => handleEditProduct(data, product._id))} className=' max-w-4xl mx-auto flex flex-col gap-3 py-5 px-10'>

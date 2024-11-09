@@ -3,11 +3,13 @@ import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, Dr
 import Button from './Button';
 
 
-export default function DrawerWrapper({children, heading, subHeading, btnText}) {
+export default function DrawerWrapper({children, heading, subHeading, btnText, openButton}) {
     return (
         <Drawer>
             <DrawerTrigger>
-                <Button text={btnText} type={'button'} className={'mr-5'} />
+                {
+                    openButton ? openButton : <Button text={btnText} type={'button'} className={'mr-5'} />
+                }
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader>
