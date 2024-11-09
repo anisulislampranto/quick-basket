@@ -27,6 +27,17 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setProduct: (state, action) => {
+      if (state.user?.shop) {
+        state.user.shop.products = [
+          ...(state.user.shop.products || []),
+          action.payload,
+        ];
+      } else {
+        state.user.shop = { products: [action.payload] };
+      }
+    },
+
     clearUser: () => {
       return null;
     },
@@ -49,6 +60,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, setUserType } = userSlice.actions;
+export const { setUser, clearUser, setUserType, setProduct } =
+  userSlice.actions;
 
 export default userSlice.reducer;

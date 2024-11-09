@@ -72,7 +72,7 @@ export default function AuthenticationClient() {
             setTimeout(() => {
                 setBtnState('');
             }, 2000);
-          } 
+        }
 
         } catch (error) {
             setBtnState('failed')

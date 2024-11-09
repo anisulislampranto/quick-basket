@@ -1,7 +1,8 @@
 "use client";
 
-import { fetchMe } from "@/lib/features/user/userSlice";
+import { fetchMe, setProduct } from "@/lib/features/user/userSlice";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 const useEditProduct = () => {
@@ -49,7 +50,7 @@ const useEditProduct = () => {
 
       if (res.ok) {
         setEditProductSuccess(true);
-        dispatch(fetchMe());
+        dispatch(setProduct(result.product));
 
         setTimeout(() => {
           setEditProductSuccess(false);

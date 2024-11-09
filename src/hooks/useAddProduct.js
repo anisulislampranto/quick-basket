@@ -1,7 +1,8 @@
 "use client";
 
-import { fetchMe } from "@/lib/features/user/userSlice";
+import { fetchMe, setProduct } from "@/lib/features/user/userSlice";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -12,7 +13,7 @@ const useAddProduct = () => {
   const [addProductError, setAddProductError] = useState(null);
   const [addProductSuccess, setAddProductSuccess] = useState(false);
 
-  const handleAddProduct = async (data) => {
+  const handleAddProduct = async (data, reset) => {
     const token = localStorage.getItem("token");
     setAddProductLoading(true);
     setAddProductError(null);
@@ -50,8 +51,9 @@ const useAddProduct = () => {
       console.log("result", result);
 
       if (res.ok) {
+        reset();
         setAddProductSuccess(true);
-        dispatch(fetchMe());
+        dispatch(setProduct(result.product));
 
         setTimeout(() => {
           setAddProductSuccess(false);

@@ -58,7 +58,6 @@ export default function HeaderClient() {
                                     <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
                                 )
                             }
-
                             <Link href={ user?.name ? '/profile' : '/signup'} className='hover:text-gray-500 cursor-pointer' >{user?.name ? user?.name : 'Sign up'}</Link>
                         </div>
 

@@ -29,14 +29,14 @@ export const categories = [
 
 
 export default function AddProductClient() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
     const { handleAddProduct, addProductLoading, addProductError, addProductSuccess } = useAddProduct();
 
     return (
         <DrawerWrapper btnText={'+ Add Product'} heading={'Add Product'} subHeading={'Add Product For your shop'}>
             {
                 addProductLoading ? <Loader2 />  : (addProductError && !addProductLoading) ? <p className=' text-center text-2xl md:text-5xl text-red-600 py-20'>{addProductError}</p> : (addProductSuccess && !addProductLoading) ? <h1 className=' py-20 text-center text-2xl md:text-5xl text-green-600'>Product Added Successfully!</h1> :  
-                    <form onSubmit={handleSubmit(handleAddProduct)} className=' max-w-4xl mx-auto flex flex-col gap-3 py-5 px-10'>
+                    <form onSubmit={handleSubmit( (data) => handleAddProduct(data, reset))} className=' max-w-4xl mx-auto flex flex-col gap-3 py-5 px-10'>
                         <div className=' flex flex-wrap gap-5 justify-between'>
                             <div className=' flex flex-col w-full md:w-[46%]'>
                                 <label htmlFor="name">Name</label>

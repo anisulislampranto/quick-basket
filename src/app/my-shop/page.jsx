@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import AddProductClient from '@/components/AddProduct/AddProduct';
 import AddShopClient from '@/components/AddShop/AddShop';
-import ShopProductsClient from '@/components/ShopProducts/ShopProductsClient';
 import { useRouter } from 'next/navigation';
+import ShopProducts from '@/components/ShopProducts/ShopProductsClient';
 
 
 export default function MyShopClient() {
@@ -28,7 +28,6 @@ export default function MyShopClient() {
     if (user && user?.email && user.type !== 'seller') {
        return <div className=' text-center mt-[20%]'>Only Seller Has the access to this page</div>
     }
-
 
     return (
         <>
@@ -63,8 +62,8 @@ export default function MyShopClient() {
                         </div>
 
                     </div>
-                    <div className=' flex flex-col container mx-auto '>
-                        <ShopProductsClient products={user?.shop?.products} />
+                    <div className=' flex flex-col container mx-auto pb-20'>
+                        <ShopProducts products={user?.shop?.products} />
                     </div>
                 </>
 
