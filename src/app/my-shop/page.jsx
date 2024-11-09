@@ -46,7 +46,7 @@ export default function MyShopClient() {
                             <Image className=' absolute object-cover' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.coverImage}`} alt='ShopImage' fill />
                         </div>
 
-                        <div className=' ml-6 absolute bottom-20 md:bottom-28 flex flex-col md:gap-5 md:flex-row backdrop-blur-md text-white border border-white max-w-[80%] py-2'>
+                        <div className=' ml-6 absolute bottom-20 md:bottom-28 flex flex-col md:gap-5 md:flex-row backdrop-blur-md backdrop-brightness-75 text-white border border-white max-w-[80%] py-2'>
                             <div className=' left-5 h-14 w-14 md:h-40 md:w-80 relative'>
                                 <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.shop?.logo}`} alt='ShopImage' fill />
                             </div>

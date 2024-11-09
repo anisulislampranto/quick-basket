@@ -15,7 +15,7 @@ function CategoryProducts({ title, products }) {
             <h1 className=' text-sm'>{title}</h1>
         </DropBorder>
         <ul className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10">
-          {products.map((el) => (
+          {products.length > 0 ? products.map((el) => (
             <li key={el._id} className="border-2 border-transparent p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out">
               
               <div className="relative h-40 w-40">
@@ -30,7 +30,7 @@ function CategoryProducts({ title, products }) {
                 <h2>{el.name}</h2>
               </div>
             </li>
-          ))}
+          )) : <p>No Product Available</p>}
         </ul>
     </div>
   );

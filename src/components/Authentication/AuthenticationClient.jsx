@@ -116,9 +116,7 @@ export default function AuthenticationClient() {
 
     useEffect(() => {
         if (user?.email && !isLoading) {
-            setTimeout(() => {
-                router.back()
-            }, 2000);
+            router.back()
         }
     }, [user, isLoading])
     
