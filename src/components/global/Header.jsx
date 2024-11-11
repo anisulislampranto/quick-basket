@@ -9,6 +9,10 @@ import logo from '../../assets/quick-basket.png'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { fetchMe } from '@/lib/features/user/userSlice';
+import { BsCart2 } from "react-icons/bs";
+import SheetWrapper from '../ui/SheetWrapper';
+import CartData from '../CartData/CartData';
+
 
 
 
@@ -36,6 +40,7 @@ export default function HeaderClient() {
     const [open, setOpen] = useState(false);
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const { cartProducts } = useSelector((state) => state.cartProducts);
 
     useEffect(() => {
         if (user?.length === 0) {
@@ -59,14 +64,35 @@ export default function HeaderClient() {
                                 )
                             }
                             <Link href={ user?.name ? '/profile' : '/signup'} className='hover:text-gray-500 cursor-pointer' >{user?.name ? user?.name : 'Sign up'}</Link>
+                            
+                            <SheetWrapper openButton={
+                                <span className=' relative '>
+                                    <BsCart2 className=' w-6 h-6' /> 
+                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length ? cartProducts?.length : 0}</span> 
+                                </span>
+                            }>
+                                <CartData />
+                            </SheetWrapper>
                         </div>
 
-                        {/* For Small Screen */}
-                        <button className=' block lg:hidden' onClick={() => setOpen(!open)} >
-                            {
-                                open ? <RiCloseLargeLine className=' w-8 h-8 text-black' /> : <RxHamburgerMenu className=' w-8 h-8 text-black' /> 
-                            }
-                        </button>
+                        <div className='  items-center gap-10 flex lg:hidden'>
+                            <SheetWrapper openButton={
+                                <span className=' relative w-7 h-7'>
+                                    <BsCart2 className=' w-6 h-6' /> 
+                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length ? cartProducts?.length : 0}</span> 
+                                </span>
+                            }>
+                                <CartData />
+                            </SheetWrapper>
+
+                            {/* For Small Screen */}
+                            <button className='' onClick={() => setOpen(!open)} >
+                                {
+                                    open ? <RiCloseLargeLine className=' w-8 h-8 text-black' /> : <RxHamburgerMenu className=' w-8 h-8 text-black' /> 
+                                }
+                            </button>
+                        </div>
+
                     </div>
             </div>
 

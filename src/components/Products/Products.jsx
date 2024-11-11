@@ -8,7 +8,6 @@ import Link from 'next/link';
 
 
 function CategoryProducts({ title, products }) {
-  console.log('products', products);
   
   return (
     <div className="space-y-5 mt-10">
