@@ -5,9 +5,10 @@ import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
 import DrawerWrapper from '../ui/DrawerWrapper';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 
-function CategoryProducts({ title, products }) {
+function CategoryProducts({ title, products, user }) {
   
   return (
     <div className="space-y-5 mt-10">
@@ -16,24 +17,22 @@ function CategoryProducts({ title, products }) {
         </DropBorder>
         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10">
           {products.length > 0 ? products?.map((el) => (
+            
             <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2">
                 <div className="relative h-40 w-56">
                   <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
-                  {/* Edit Product Drawer */}
-                  <DrawerWrapper heading={'Edit Product'} subHeading={'Edit Product of your shop.'} openButton={<button className=' border border-black p-1 bg-white absolute -top-3 -right-3'><FaEdit className=' w-5 h-5' /></button>}>
-                    <EditProduct product={el} />
-                  </DrawerWrapper>
-                  {/* Edit Product Drawer */}
                 </div>
                 <div className='flex items-start gap-2 justify-between'>
                   <h2>{el.name}</h2>
                   <p>${el.price}</p>
                 </div>
 
+                <p className=' text-sm line-clamp-3'>{el.description}</p>
+
                 {/*  */}
-                <div className='flex justify-between'>
+                <div className={`justify-between ${user?.shop?._id === el?.shop?._id ? 'flex' : 'hidden' }`}>
                   <p>Stock</p>
-                  <p className={`${el.stock < 5 && 'text-red-600'}`}>{el.stock}</p>
+                  <p className={`${el.stock < 5 && 'text-red-600'}`}>{ el.stock}</p>
                 </div>
                 {/*  */}
             </Link>
@@ -44,7 +43,8 @@ function CategoryProducts({ title, products }) {
 }
 
 export default function Products({ products }) {
-  const activeProducts = products?.filter((el) => el.isActive);
+  const activeProducts = products?.filter((el) => el.isActive); 
+  const {user} = useSelector((state) => state.user)
 
   const categories = [
     { title: 'Home And Living Products', products: activeProducts?.filter((el) => el.category === 'home&Living') },
@@ -56,7 +56,7 @@ export default function Products({ products }) {
   return (
     <div>
         {categories.map((category) => (
-          <CategoryProducts key={category.title} title={category.title} products={category?.products} />
+          <CategoryProducts key={category.title} title={category.title} products={category?.products} user={user} />
         ))}
     </div>
   );

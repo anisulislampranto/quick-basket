@@ -7,7 +7,7 @@ export default function SheetWrapper({children, heading, subHeading, openButton}
             <SheetTrigger>
                 {openButton}
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className={'overflow-scroll'} >
                 {children}
             </SheetContent>
         </Sheet>

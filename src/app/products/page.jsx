@@ -1,7 +1,7 @@
 'use client';
 
 import Products from '@/components/Products/Products';
-import { placeholderCard } from '@/utils/PlaceholderCard';
+import Loader2 from '@/utils/Loader2';
 import React, { useEffect, useState } from 'react'
 
 export default function ProductsClient() {
@@ -29,13 +29,8 @@ export default function ProductsClient() {
             <h1 className=' text-5xl mt-10'>Products</h1>
             {
                 fetching ? 
-                <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>        
-                    {placeholderCard}
-                    {placeholderCard}
-                    {placeholderCard}
-                    {placeholderCard}
-                    {placeholderCard}
-                    {placeholderCard}
+                <div className='flex items-end justify-center h-72'>        
+                    <Loader2 />
                 </div>
                 : 
                 <Products products={products} />

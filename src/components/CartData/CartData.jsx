@@ -1,19 +1,23 @@
+'use client'
+
 import { decreaseCartProductQuantity, increaseCartProductQuantity, removeCartProduct } from '@/lib/features/cart/cartSlice';
 import Image from 'next/image';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AiOutlineDelete } from "react-icons/ai";
+import Link from 'next/link';
+import { SheetClose } from '../ui/sheet';
 
 
 export default function CartData() {
     const { cartProducts, totalPrice } = useSelector((state) => state.cartProducts);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className=' flex flex-col justify-end'>
         <h1>Cart Products</h1>
-        <ul className=' flex flex-col gap-5 mt-10'>
+        <ul className=' flex flex-col gap-5 mt-10 overflow-scroll h-full'>
             {cartProducts.map((el) =>
                 <li key={el._id} className=' grid grid-cols-9 gap-3 items-center justify-between'>
                     <button className=' hover:text-red-600' onClick={()=> dispatch(removeCartProduct(el._id))}>
@@ -35,10 +39,17 @@ export default function CartData() {
                 </li>
             )}
         </ul>
+
         <div className=' flex justify-between mt-10'>
             <p>Total Price:</p>
             <p>${totalPrice}</p>
         </div>
+
+            <Link href={'/checkout'} className=' border p-3 border-black hover:bg-black hover:text-white my-10 w-28 text-center'>
+                <SheetClose>
+                        Checkout
+                </SheetClose>
+            </Link>
     </div>
   )
 }

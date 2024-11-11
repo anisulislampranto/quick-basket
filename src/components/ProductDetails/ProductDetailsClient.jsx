@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import AccordionWrapper from '../ui/AccordionWrapper';
 import { useDispatch } from 'react-redux';
 import { setCartProduct } from '@/lib/features/cart/cartSlice';
+import { BsCartPlus } from "react-icons/bs";
 
 export default function ProductDetailsClient({productDetails}) {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -31,13 +32,28 @@ export default function ProductDetailsClient({productDetails}) {
                     </ul>
                 </div>
 
-                <div className='lg:pt-20 lg:fixed lg:h-screen w-full lg:w-[30%] lg:right-0 lg:top-20 lg:bottom-0 border p-5'>
-                    <p className=' capitalize'>{productDetails.category.split('&').join(' & ')}</p>
-                    <h1 className=' text-4xl uppercase'>{productDetails.name}</h1>
-                    <p>${productDetails.price}</p>
-                    <div> <button onClick={() => setQuantity(quantity - 1)}>-</button> {quantity} <button onClick={() => setQuantity(quantity + 1)}>+</button> </div>
+                <div className='lg:pt-20 lg:fixed lg:h-screen w-full lg:w-[30%] lg:right-0 lg:top-20 lg:bottom-0 border p-5 flex flex-col sm:flex-row justify-center items-center lg:items-start lg:justify-start lg:flex-col gap-5'>
+                    
+                    <div>    
+                        <p className=' capitalize'>{productDetails.category.split('&').join(' & ')}</p>
+                        <h1 className=' text-4xl uppercase'>{productDetails.name}</h1>
+                    </div>
+                        <p>${productDetails.price}</p>
+                        <div className=' flex items-center gap-2'> 
+                            <button className=' px-2 border hover:border-red-600 hover:text-red-600' onClick={() => setQuantity(quantity - 1)}>-</button> 
+                            {quantity} 
+                            <button className=' px-2 border hover:border-green-600 hover:text-green-600' onClick={() => setQuantity(quantity + 1)}>+</button> 
+                        </div>
 
-                    <button onClick={()=> dispatch(setCartProduct({product: productDetails, quantity}))}>Add to Cart</button>
+                    <button className=' border border-black flex items-center p-2 gap-2 hover:bg-black hover:text-white w-40 justify-center' onClick={()=> dispatch(setCartProduct({product: productDetails, quantity}))}> <BsCartPlus /> Add to Cart</button>
+
+                    <div>
+                        <p className=' text-gray-600'>Sold By</p>
+                        <div className=' relative h-20 w-20 border'>
+                            <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.shop.logo}`} alt='shopLogo' fill />
+                        </div>
+                        <p>{productDetails.shop.name}</p>
+                    </div>
 
                 </div>
             </div>

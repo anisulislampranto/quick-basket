@@ -13,17 +13,10 @@ import { BsCart2 } from "react-icons/bs";
 import SheetWrapper from '../ui/SheetWrapper';
 import CartData from '../CartData/CartData';
 
-
-
-
 const navLinks = [
     {
         label: 'Home',
         url: '/'
-    },
-    {
-        label: 'Shops',
-        url: '/shops'
     },
     {
         label: 'Products',
@@ -32,6 +25,10 @@ const navLinks = [
     {
         label: 'My Shop',
         url: '/my-shop'
+    },
+    {
+        label: 'Orders',
+        url: '/orders'
     },
 ]
 
@@ -59,7 +56,7 @@ export default function HeaderClient() {
 
                         <div className=' hidden lg:flex items-center justify-between gap-5 font-poppinsRegular'>
                             {
-                                navLinks.map((el) => 
+                                navLinks.filter((el) =>  user.type !== 'seller' && el.label !== 'My Shop').map((el) => 
                                     <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
                                 )
                             }
@@ -68,18 +65,18 @@ export default function HeaderClient() {
                             <SheetWrapper openButton={
                                 <span className=' relative '>
                                     <BsCart2 className=' w-6 h-6' /> 
-                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length ? cartProducts?.length : 0}</span> 
+                                    <span className=' z-50 absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length && cartProducts?.length }</span> 
                                 </span>
                             }>
                                 <CartData />
                             </SheetWrapper>
                         </div>
 
-                        <div className='  items-center gap-10 flex lg:hidden'>
+                        <div className='  items-center gap-10 flex lg:hidden overflow-scroll'>
                             <SheetWrapper openButton={
                                 <span className=' relative w-7 h-7'>
                                     <BsCart2 className=' w-6 h-6' /> 
-                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length ? cartProducts?.length : 0}</span> 
+                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>{cartProducts?.length && cartProducts?.length }</span> 
                                 </span>
                             }>
                                 <CartData />
@@ -101,8 +98,8 @@ export default function HeaderClient() {
                 className={`bg-white z-50 sticky top-24 w-full text-2xl gap-10 text-center flex flex-col font-poppinsRegular border-b ${open ? 'h-screen opacity-100 py-10' : 'h-0 opacity-0'} transition-all duration-300 ease-in-out overflow-hidden`}
             >
                 {
-                    navLinks.map((el) => 
-                        <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
+                    navLinks.filter((el) =>  user.type !== 'seller' && el.label !== 'My Shop').map((el) => 
+                        <Link onClick={()=> setOpen(false)} href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
                     )
                 }
                 <Link onClick={() => setOpen(false)} type='button' href={ user?.name ? '/profile' : '/signup'} className='hover:text-gray-500 cursor-pointer'>
