@@ -11,11 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Loader2 from '@/utils/Loader2';
+import { useRouter } from 'next/navigation';
 
 export default function OrdersPage() {
   const { user } = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
-  const [fetchingOrders, setFetchingOrders] = useState(false)
+  const [fetchingOrders, setFetchingOrders] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     (async () => {
@@ -37,6 +39,12 @@ export default function OrdersPage() {
         }
     })();
   }, []);
+
+  useEffect(()=> {
+    if (!user?.email) {
+      router.push('signin')
+    }
+  }, [])
 
   return (
     <div className="container mx-auto py-10 px-10">

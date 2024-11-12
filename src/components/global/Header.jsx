@@ -45,19 +45,18 @@ export default function HeaderClient() {
     const router = useRouter();
 
     console.log('userCleared',user);
-    
-
 
     useEffect(() => {
-        if (!user?.name) {
+        const token = localStorage.getItem('token')
+        if (token && !user.email) {
             dispatch(fetchMe());
         }
-    }, [dispatch, user]);
+    }, []);
 
     const handleLogout = () => {
         dispatch(clearUser);
         localStorage.removeItem('token');
-        router.refresh();
+        window.location.reload()
     }
 
     return (
@@ -71,7 +70,7 @@ export default function HeaderClient() {
                     <div className=' hidden lg:flex items-center justify-between gap-5 font-poppinsRegular'>
                         {
                             navLinks
-                                .filter((el) => (user?.type !== 'seller' && el.label !== 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
+                                .filter((el) => (user?.type === 'seller' && el.label === 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
                                 .map((el) => (
                                     <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
                                 ))
@@ -96,7 +95,7 @@ export default function HeaderClient() {
                                         Welcome <strong>{user?.name}</strong>
                                     </div>
                                     <div className=' flex justify-end gap-3'>
-                                        <AlertDialogAction onClick={handleLogout} className=' bg-red-700 text-white p-3'>Logout</AlertDialogAction>
+                                        <button onClick={handleLogout} className=' bg-red-700 text-white p-3'>Logout</button>
                                         <AlertDialogCancel className=' bg-black text-white p-3'>Cancel</AlertDialogCancel>
                                     </div>
                                 </div>
@@ -142,7 +141,7 @@ export default function HeaderClient() {
             >
                 {
                     navLinks
-                        .filter((el) => (user?.type !== 'seller' && el.label !== 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
+                        .filter((el) => (user?.type === 'seller' && el.label === 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
                         .map((el) => (
                             <Link onClick={() => setOpen(false)} href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
                         ))
