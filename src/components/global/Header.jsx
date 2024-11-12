@@ -66,6 +66,9 @@ export default function HeaderClient() {
         if (user?.type === 'customer' && el.label === 'My Shop') {
             return false;
         }
+        if (user?.type === 'admin') {
+            return el.label === 'Orders';
+        }
         return true;
     });
 

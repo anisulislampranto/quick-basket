@@ -13,6 +13,8 @@ import {
 import Loader2 from '@/utils/Loader2';
 import { useRouter } from 'next/navigation';
 import { AlertWrapper } from '@/components/ui/AlertWrapper';
+import { SiTicktick } from "react-icons/si";
+
 
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -118,6 +120,39 @@ export default function OrdersPage() {
     }
   };
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    const token = localStorage.getItem('token');
+  
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/update-status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ orderId, newStatus }),
+      });
+  
+      if (!response.ok) throw new Error('Failed to update status');
+  
+      const updatedOrder = await response.json();
+  
+      // Refresh orders after updating status
+      setOrders((prevOrders) => 
+        prevOrders.map(order => 
+          order._id === orderId ? { ...order, orderStatus: newStatus } : order
+        )
+      );
+  
+      if (newStatus === 'delivered') {
+        window.location.reload(); 
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+  
+
   useEffect(()=> {
     if (!user?.email) {
       router.push('signin')
@@ -126,7 +161,7 @@ export default function OrdersPage() {
 
   return (
     <div className="container mx-auto py-10 px-10">
-      <h1 className="text-5xl mb-10">My Orders</h1>
+      <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
 
       {
         fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p className=' text-center text-xl'>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
@@ -148,18 +183,37 @@ export default function OrdersPage() {
                         <TableCell className="font-medium">{index + 1}</TableCell>
                         <TableCell>
                             {order.items?.map((product, i) => (
-                            <span key={product.product._id}>
-                                {product.product.name}
-                                {i < order.items.length - 1 && ", "}
-                            </span>
+                              <span key={product.product._id} className=' flex items-center'>
+                                  {product.orderStatus === 'accepted'? <SiTicktick className=' text-green-700 h-3 w-3'  /> : <SiTicktick className=' text-red-700 h-3 w-3' />}
+                                  {product.product.name}
+                                  {i < order.items.length - 1 && ", "}
+                              </span>
                             ))}
                         </TableCell>
                         <TableCell className={` capitalize ${order.payment.status === 'paid' ? 'text-green-700' : 'text-red-700'}`}>{order.payment.status}</TableCell>
                         <TableCell>{order.deliveryAddress}</TableCell>
-                        <TableCell className=' capitalize'>{order.orderStatus}</TableCell>
+                        <TableCell className=' capitalize'>
+                          {user.type === 'admin' ? 
+                              <select
+                                name="orderStatus"
+                                id="orderStatus"
+                                value={order.orderStatus}
+                                onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                              >
+                                <option value="pending" disabled={order.orderStatus === "pending"}>Pending</option>
+                                <option value="processing" disabled={order.orderStatus === "processing"}>Processing</option>
+                                <option value="shipped" disabled={order.orderStatus === "shipped"}>Shipped</option>
+                                <option value="delivered" disabled={order.orderStatus === "delivered"}>Delivered</option>
+                                <option value="cancelled" disabled={order.orderStatus === "cancelled"}>Cancelled</option>
+                              </select>
+                            : 
+                            order.orderStatus
+                          }
+                          
+                        </TableCell>
                         <TableCell className="text-right">${order.totalAmount}</TableCell>
                         {
-                          order.payment.status === 'unpaid' && 
+                          order.payment.status === 'unpaid' && user.type !== 'admin' && 
                           <AlertWrapper 
                             openButton={
                               <TableCell className="text-right hover:text-green-600 cursor-pointer">Pay Now</TableCell>
