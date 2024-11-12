@@ -28,7 +28,9 @@
     "react-redux": "^9.1.2",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^1.1.1"
+    "vaul": "^1.1.1",
+    "@stripe/react-stripe-js": "^2.8.1",
+    "@stripe/stripe-js": "^4.9.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

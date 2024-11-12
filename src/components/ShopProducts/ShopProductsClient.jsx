@@ -1,5 +1,7 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import DropBorder from '../ui/DropBorder';
 import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
@@ -43,6 +45,7 @@ function CategoryProducts({ title, products }) {
 
 export default function ShopProducts({ products }) {
   const activeProducts = products.filter((el) => el.isActive);
+  const [type, setType] = useState('products');
 
   const categories = [
     { title: 'Home And Living Products', products: activeProducts.filter((el) => el.category === 'home&Living') },
@@ -53,12 +56,35 @@ export default function ShopProducts({ products }) {
 
   return (
     <div className="container px-5">
-        <DropBorder>
-            <h1 className="text-2xl">Products</h1>
-        </DropBorder>
-        {categories.map((category) => (
-          <CategoryProducts key={category.title} title={category.title} products={category.products} />
-        ))}
+
+        
+        <div className="flex bg-black p-1 mb-4 w-96">
+            <button
+                type="button"
+                onClick={() => setType('products')}
+                className={`flex-1 p-1 ${type === 'products' ? 'bg-white text-black' : ' bg-black text-white'}`}
+            >
+                Products
+            </button>
+            <button
+                type="button"
+                onClick={() => setType('orders')}
+                className={`flex-1 p-1 ${type === 'orders' ? 'bg-white text-black' : 'bg-black text-white'}`}
+            >
+                Orders
+            </button>
+        </div>
+
+        {
+          type === 'products' ? categories.map((category) => (
+            <CategoryProducts key={category.title} title={category.title} products={category.products} />
+          )) : 
+          <div>
+            
+          </div>
+        }
+
+        
     </div>
   );
 }
