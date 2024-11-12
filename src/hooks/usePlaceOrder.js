@@ -32,6 +32,7 @@ export const usePlaceOrder = () => {
     }
 
     const productsData = cartProducts.map((el) => ({
+      shop: el.shop._id,
       product: el._id,
       quantity: el.quantity,
       price: el.price,

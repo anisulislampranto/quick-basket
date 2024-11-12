@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import DropBorder from '../ui/DropBorder';
 import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
 import DrawerWrapper from '../ui/DrawerWrapper';
-
+import { useSelector } from 'react-redux';
 
 function CategoryProducts({ title, products }) {
   return (
@@ -30,24 +30,27 @@ function CategoryProducts({ title, products }) {
                   <p>${el.price}</p>
                 </div>
 
-                {/*  */}
                 <div className='flex justify-between'>
                   <p>Stock</p>
                   <p className={`${el.stock < 5 && 'text-red-600'}`}>{el.stock}</p>
                 </div>
-                {/*  */}
             </li>
           )) : <p>No Product Available</p>}
         </ul>
     </div>
   );
 }
-
-export default function ShopProducts({ products, type ,setType, shopOrders }) {
+export default function ShopProducts({ products, type, setType, shopOrders, fetchOrders, setFetchOrders }) {
   const activeProducts = products.filter((el) => el.isActive);
+  const { user } = useSelector((state) => state.user);
+  const [loadingItem, setLoadingItem] = useState();
+  const [errorItem, setErrorItem] = useState();
 
-  console.log('shopOrders', shopOrders);
-  
+  const [orderLoading, setOrderLoading] = useState();
+  const [orderError, setOrderError] = useState();
+  const [orderSuccess, setOrderSuccess] = useState();
+
+  const [orderType, setOrderType] = useState('pending');
 
   const categories = [
     { title: 'Home And Living Products', products: activeProducts.filter((el) => el.category === 'home&Living') },
@@ -56,10 +59,69 @@ export default function ShopProducts({ products, type ,setType, shopOrders }) {
     { title: 'Electronics And Gadgets Products', products: activeProducts.filter((el) => el.category === 'electronics&Gadgets') },
   ];
 
+  const acceptOrderItem = async (orderId, itemId) => {
+    setLoadingItem(itemId);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${orderId}/item/${itemId}/accept`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setLoadingItem(null);
+        setOrderSuccess(true);
+        setFetchOrders(fetchOrders + 1);
+      }
+    } catch (error) {
+      setErrorItem(itemId);
+      setTimeout(() => {
+        setErrorItem(null);
+      }, 3000);
+      setLoadingItem(null);
+      console.error("Error accepting order item:", error);
+    }
+  };
+
+  const handleAcceptAll = async (orderId) => {
+    setOrderLoading(orderId);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${orderId}/accept-all-items/${user.shop?._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setOrderLoading(null);
+        setOrderSuccess(orderId);
+        setFetchOrders(fetchOrders + 1); 
+        console.log(data.message); 
+      } else {
+        setOrderLoading(null);
+        setOrderError('');
+        console.error('Failed to accept all items:', data.message);
+      }
+    } catch (error) {
+      setOrderLoading(null);
+      setOrderError('');
+      console.error('Error in handleAcceptAll:', error);
+    }
+  };
+
   return (
     <div className="container px-5">
-
-        <div className="flex bg-black p-1 mb-4 w-96">
+        <div className="flex bg-black p-1 mb-4 w-96 mt-10 md:mt-0">
             <button
                 type="button"
                 onClick={() => setType('products')}
@@ -76,22 +138,79 @@ export default function ShopProducts({ products, type ,setType, shopOrders }) {
             </button>
         </div>
 
-        {
-          type === 'products' ? categories.map((category) => (
+        {type === 'products' ? (
+          categories.map((category) => (
             <CategoryProducts key={category.title} title={category.title} products={category.products} />
-          )) : 
-          <div>
-              {
-                shopOrders?.map((el) =>
-                  <div>
-                    <p>{el.name}</p>
-                  </div>
-                )
-              }
+          ))
+        ) : (
+          <>
+            <div className="flex bg-black p-1 mb-4 w-96 mt-10 md:mt-0">
+              <button
+                  type="button"
+                  onClick={() => setOrderType('pending')}
+                  className={`flex-1 p-1 ${orderType === 'pending' ? 'bg-white text-black' : ' bg-black text-white'}`}
+              >
+                  Pending
+              </button>
+              <button
+                  type="button"
+                  onClick={() => setOrderType('accepted')}
+                  className={`flex-1 p-1 ${orderType === 'accepted' ? 'bg-white text-black' : 'bg-black text-white'}`}
+              >
+                  Accepted
+              </button>
           </div>
-        }
 
-        
+          {shopOrders?.length > 0 ? (
+            <ul className='flex flex-col gap-10 mt-10'>
+              {shopOrders.map((order) => {
+                const filteredItems = order.items?.filter(item => item.product.shop === user.shop?._id && item.orderStatus === orderType);
+                
+                return (
+                  <li key={order._id}>
+                    <div className='p-2 border-black border-2 border-e-4 flex justify-between'>
+                      <p>Order Id: {order._id}</p>
+                      <p className='capitalize'>Order: {order.orderStatus}</p>
+                      <p className='capitalize'>Payment: <span className={`${order.payment.status === 'paid' ? 'text-green-700' : ' text-red-700'}`}>{order.payment.status}</span></p>
+                    </div>
+
+                    <div>
+                      <div className='flex justify-end mt-3'>
+                        <button onClick={() => handleAcceptAll(order._id)} className='bg-black text-white p-3 border-2 border-black hover:bg-white hover:text-black'>
+                          {orderLoading && orderLoading === order._id ? 'Accepting' : orderError === order._id ? 'Failed' : 'Accept Whole Order'}
+                        </button>
+                      </div>
+                      <div className='flex gap-10 mt-5 overflow-scroll'>
+                        {filteredItems.length > 0 ? (
+                          filteredItems.map((item) => (
+                            <div key={item._id} className='flex flex-col justify-between gap-2 border-2 border-black p-2 min-w-44'>
+                              <div className='relative h-44 w-full'>
+                                <Image className='absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.product?.images?.[0]}`} alt='image' fill />
+                              </div>
+                              <p>Product: {item.product.name}</p>
+                              <p>Quantity: {item.quantity}</p>
+                              <p className='capitalize'>Status: {item.orderStatus}</p>
+                              {item.orderStatus !== 'accepted' && (
+                                <button disabled={loadingItem === item._id} className='bg-black border-black border-2 text-white p-3 hover:bg-white hover:text-black' onClick={() => acceptOrderItem(order._id, item._id)}>
+                                  {errorItem === item._id ? 'Failed' : loadingItem === item._id ? 'Accepting' : 'Accept'}
+                                </button>
+                              )}
+                            </div>
+                          ))
+                        ) : (
+                          <p>No items found for {orderType} orders.</p>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p>No Orders Available</p>
+          )}
+          </>
+        )}
     </div>
   );
 }

@@ -18,7 +18,7 @@ function CategoryProducts({ title, products, user }) {
         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10">
           {products.length > 0 ? products?.map((el) => (
             
-            <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2">
+            <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
                 <div className="relative h-40 w-56">
                   <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
                 </div>

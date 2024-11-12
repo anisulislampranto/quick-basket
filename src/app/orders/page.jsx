@@ -60,13 +60,17 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [fetchingOrders, setFetchingOrders] = useState(false);
   const router = useRouter();
-  const [fetchOrder, setFetchOrder] = useState(0)
+  const [fetchOrder, setFetchOrder] = useState(0);
+
+  console.log('orders', orders);
+  console.log('fetchingOrders', fetchingOrders);
+  
 
   useEffect(() => {
     (async () => {
-        setFetchingOrders(true)
         const token = localStorage.getItem('token');
         try {
+          setFetchingOrders(true)
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -79,6 +83,8 @@ export default function OrdersPage() {
         } catch (error) {
             setFetchingOrders(false)
             console.log('Error fetching orders:', error);
+        } finally {
+          setFetchingOrders(false)
         }
     })();
   }, [fetchOrder]);
@@ -123,7 +129,7 @@ export default function OrdersPage() {
       <h1 className="text-5xl mb-10">My Orders</h1>
 
       {
-        fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
+        fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p className=' text-center text-xl'>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
             <Table>
                 <TableHeader>
                   <TableRow>

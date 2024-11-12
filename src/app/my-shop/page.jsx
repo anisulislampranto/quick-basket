@@ -14,6 +14,7 @@ export default function MyShopClient() {
     const {user, isLoading} = useSelector((state) => state.user);
     const router = useRouter();
     const [shopOrders, setShopOrders] = useState([])
+    const [fetchOrders, setFetchOrders] = useState(0)
 
     useEffect(() => {
         (async()=>{
@@ -32,7 +33,7 @@ export default function MyShopClient() {
                 console.log(error);
             }
         })()
-    }, [type])
+    }, [type, fetchOrders])
 
     useEffect(() => {
         if (!user || !user?.email) {
@@ -81,7 +82,7 @@ export default function MyShopClient() {
 
                     </div>
                     <div className=' flex flex-col container mx-auto pb-20'>
-                        <ShopProducts shopOrders={shopOrders} setType={setType} type={type} products={user?.shop?.products} />
+                        <ShopProducts fetchOrders={fetchOrders} setFetchOrders={setFetchOrders} shopOrders={shopOrders} setType={setType} type={type} products={user?.shop?.products} />
                     </div>
                 </>
 
