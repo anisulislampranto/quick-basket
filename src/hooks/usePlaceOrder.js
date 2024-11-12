@@ -1,4 +1,9 @@
+"use client";
+
+import { clearCart } from "@/lib/features/cart/cartSlice";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 export const usePlaceOrder = () => {
@@ -6,12 +11,18 @@ export const usePlaceOrder = () => {
   const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
   const [placeOrderError, setPlaceOrderError] = useState(null);
   const [placeOrderSuccess, setPlaceOrderSuccess] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handlePlaceOrder = async (
     cartProducts,
     totalPrice,
     deliveryAddress
   ) => {
+    console.log("cartProducts", cartProducts);
+    console.log("totalPrice", totalPrice);
+    console.log("deliveryAddress", deliveryAddress);
+
     if (!deliveryAddress) {
       setPlaceOrderError("Delivery Address is required");
       setTimeout(() => {
@@ -20,11 +31,19 @@ export const usePlaceOrder = () => {
       return;
     }
 
+    const productsData = cartProducts.map((el) => ({
+      product: el._id,
+      quantity: el.quantity,
+      price: el.price,
+      orderStatus: "pending",
+    }));
+
+    console.log("productsData", productsData);
+
     try {
+      const token = localStorage.getItem("token");
       setPlaceOrderLoading(true);
       setPlaceOrderError(null);
-
-      const productIds = cartProducts.map((product) => product.id);
 
       const response = await fetch(
         process.env.NEXT_PUBLIC_BACKEND_URL + "/api/orders/create",
@@ -32,25 +51,33 @@ export const usePlaceOrder = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            customer: user._id,
-            productIds,
+            items: productsData,
             totalPrice,
             deliveryAddress,
           }),
         }
       );
 
+      console.log("response", response);
+
       if (response.ok) {
         setPlaceOrderSuccess(true);
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to place order");
+        dispatch(clearCart());
+        router.push("/orders");
+        setTimeout(() => {
+          setPlaceOrderSuccess(null);
+        }, 3000);
       }
     } catch (error) {
+      console.log("error", error);
+
       setPlaceOrderError(error.message || "Something went wrong");
+      setTimeout(() => {
+        setPlaceOrderError(null);
+      }, 3000);
     } finally {
       setPlaceOrderLoading(false);
     }

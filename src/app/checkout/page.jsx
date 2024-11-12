@@ -112,7 +112,20 @@ export default function Checkout() {
 
                     <form className='flex flex-col gap-4'>
                         <textarea onChange={(e)=> setDeliveryAddress(e.target.value)} placeholder='Enter Delivery Address . . .' className='border border-black rounded-none focus:outline-none p-2' />
-                        <input onClick={() => handlePlaceOrder(cartProducts, totalWithDeliveryAfterDiscount , deliveryAddress)} type="button" value="Place Order" className='p-2 border border-black hover:bg-black hover:text-white cursor-pointer' />
+                        <input
+                            onClick={() => handlePlaceOrder(cartProducts, totalWithDeliveryAfterDiscount, deliveryAddress)}
+                            type="button"
+                            value={
+                                placeOrderLoading
+                                ? 'Loading...'
+                                : placeOrderError
+                                ? 'Failed'
+                                : placeOrderSuccess
+                                ? 'Submitted'
+                                : 'Place Order'
+                            }
+                            className="p-2 border border-black hover:bg-black hover:text-white cursor-pointer"
+                        />
                     </form>
 
                     {

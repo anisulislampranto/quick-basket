@@ -18,8 +18,6 @@ const useAddProduct = () => {
     setAddProductLoading(true);
     setAddProductError(null);
 
-    console.log("dat", data);
-
     try {
       const formData = new FormData();
       formData.append("name", data.name);
