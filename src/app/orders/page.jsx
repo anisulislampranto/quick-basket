@@ -10,63 +10,73 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Loader2 from '@/utils/Loader2';
 
 export default function OrdersPage() {
   const { user } = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
+  const [fetchingOrders, setFetchingOrders] = useState(false)
 
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        setFetchingOrders(true)
+        const token = localStorage.getItem('token');
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
 
-        if (res.ok) {
-          const data = await res.json();
-          setOrders(data.orders);
+            if (res.ok) {
+            const data = await res.json();
+            setFetchingOrders(false)
+            setOrders(data.orders);
+            }
+        } catch (error) {
+            setFetchingOrders(false)
+            console.log('Error fetching orders:', error);
         }
-      } catch (error) {
-        console.log('Error fetching orders:', error);
-      }
     })();
   }, []);
 
   return (
     <div className="container mx-auto py-10 px-10">
       <h1 className="text-5xl mb-10">My Orders</h1>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Order #</TableHead>
-            <TableHead>Items</TableHead>
-            <TableHead>Payment Status</TableHead>
-            <TableHead>Delivery Address</TableHead>
-            <TableHead>Order Status</TableHead>
-            <TableHead className="text-right">Total Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {orders?.map((order, index) => (
-            <TableRow key={order._id}>
-              <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>
-                {order.items?.map((product, i) => (
-                  <span key={product.product._id}>
-                    {product.product.name}
-                    {i < order.items.length - 1 && ", "}
-                  </span>
+
+      {
+        fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead className="w-[100px]">Order #</TableHead>
+                    <TableHead>Items</TableHead>
+                    <TableHead>Payment Status</TableHead>
+                    <TableHead>Delivery Address</TableHead>
+                    <TableHead>Order Status</TableHead>
+                    <TableHead className="text-right">Total Amount</TableHead>
+                </TableRow>
+                </TableHeader>
+                <TableBody>
+                {orders?.map((order, index) => (
+                    <TableRow key={order._id}>
+                    <TableCell className="font-medium">{index + 1}</TableCell>
+                    <TableCell>
+                        {order.items?.map((product, i) => (
+                        <span key={product.product._id}>
+                            {product.product.name}
+                            {i < order.items.length - 1 && ", "}
+                        </span>
+                        ))}
+                    </TableCell>
+                    <TableCell>{order.paymentStatus}</TableCell>
+                    <TableCell>{order.deliveryAddress}</TableCell>
+                    <TableCell>{order.orderStatus}</TableCell>
+                    <TableCell className="text-right">${order.totalAmount}</TableCell>
+                    </TableRow>
                 ))}
-              </TableCell>
-              <TableCell>{order.paymentStatus}</TableCell>
-              <TableCell>{order.deliveryAddress}</TableCell>
-              <TableCell>{order.orderStatus}</TableCell>
-              <TableCell className="text-right">${order.totalAmount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                </TableBody>
+            </Table> 
+      }
+      
     </div>
   );
 }
