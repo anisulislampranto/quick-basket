@@ -202,8 +202,8 @@ export default function OrdersPage() {
                               >
                                 <option value="pending" disabled={order.orderStatus === "pending"}>Pending</option>
                                 <option value="processing" disabled={order.orderStatus === "processing"}>Processing</option>
-                                <option value="shipped" disabled={order.orderStatus === "shipped"}>Shipped</option>
-                                <option value="delivered" disabled={order.orderStatus === "delivered"}>Delivered</option>
+                                <option value="shipped" disabled={order.orderStatus === "shipped" || order.payment.status === 'unpaid'}>Shipped</option>
+                                <option value="delivered" disabled={order.orderStatus === "delivered" || order.payment.status === 'unpaid'}>Delivered</option>
                                 <option value="cancelled" disabled={order.orderStatus === "cancelled"}>Cancelled</option>
                               </select>
                             : 
