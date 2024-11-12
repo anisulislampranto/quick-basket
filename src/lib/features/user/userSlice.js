@@ -38,9 +38,7 @@ const userSlice = createSlice({
       }
     },
 
-    clearUser: () => {
-      return null;
-    },
+    clearUser: () => initialState,
   },
   extraReducers: (builder) => {
     builder

@@ -73,6 +73,7 @@ export default function Checkout() {
             <h1 className='text-4xl'>Checkout</h1>
 
             <div className='flex flex-col-reverse gap-10 xl:flex-row'>
+
                 <ul className='flex flex-col gap-5'>
                     {cartProducts.map((el) => (
                         <li key={el._id} className='grid grid-cols-7 gap-10 justify-between items-center'>

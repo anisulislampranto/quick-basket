@@ -1,17 +1,21 @@
 'use client';
 
 import Image from 'next/image'
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeLine } from "react-icons/ri";
 import Link from 'next/link';
 import logo from '../../assets/quick-basket.png'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchMe } from '@/lib/features/user/userSlice';
+import { clearUser, fetchMe } from '@/lib/features/user/userSlice';
 import { BsCart2 } from "react-icons/bs";
 import SheetWrapper from '../ui/SheetWrapper';
 import CartData from '../CartData/CartData';
+import { AlertWrapper } from '../ui/AlertWrapper';
+import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
+import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
     {
@@ -38,12 +42,23 @@ export default function HeaderClient() {
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const { cartProducts } = useSelector((state) => state.cartProducts);
+    const router = useRouter();
+
+    console.log('userCleared',user);
+    
+
 
     useEffect(() => {
         if (!user?.name) {
             dispatch(fetchMe());
         }
     }, [dispatch, user]);
+
+    const handleLogout = () => {
+        dispatch(clearUser);
+        localStorage.removeItem('token');
+        router.refresh();
+    }
 
     return (
         <>
@@ -62,10 +77,33 @@ export default function HeaderClient() {
                                 ))
                         }
 
-                        <Link href={ user?.name ? '/profile' : '/signup'} className='hover:text-gray-500 cursor-pointer'>
-                            {user?.name ? user?.name : 'Sign up'}
-                        </Link>
-                        
+                        {
+                            !user?.name &&
+                            <Link href={'/signup'} className='hover:text-gray-500 cursor-pointer'>
+                                Sign up
+                            </Link>
+                        }
+
+                        {
+                            user?.name && 
+                            <AlertWrapper openButton={
+                                <button className='hover:text-gray-500 cursor-pointer'>
+                                    {user?.name}
+                                </button>
+                            }>
+                                <div className=' flex flex-col'>
+                                    <div className=' flex gap-2 text-xl'>
+                                        Welcome <strong>{user?.name}</strong>
+                                    </div>
+                                    <div className=' flex justify-end gap-3'>
+                                        <AlertDialogAction onClick={handleLogout} className=' bg-red-700 text-white p-3'>Logout</AlertDialogAction>
+                                        <AlertDialogCancel className=' bg-black text-white p-3'>Cancel</AlertDialogCancel>
+                                    </div>
+                                </div>
+                            </AlertWrapper>
+                        }
+
+
                         <SheetWrapper openButton={
                             <span className=' relative '>
                                 <BsCart2 className=' w-6 h-6' /> 
