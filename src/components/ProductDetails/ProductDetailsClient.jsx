@@ -6,8 +6,10 @@ import AccordionWrapper from '../ui/AccordionWrapper';
 import { useDispatch } from 'react-redux';
 import { setCartProduct } from '@/lib/features/cart/cartSlice';
 import { BsCartPlus } from "react-icons/bs";
+import { useSelector } from 'react-redux';
 
 export default function ProductDetailsClient({productDetails}) {
+    const {user} = useSelector((state) => state.user)
     const [selectedImage, setSelectedImage] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch()
@@ -38,14 +40,19 @@ export default function ProductDetailsClient({productDetails}) {
                         <p className=' capitalize'>{productDetails.category.split('&').join(' & ')}</p>
                         <h1 className=' text-4xl uppercase'>{productDetails.name}</h1>
                     </div>
-                        <p>${productDetails.price}</p>
-                        <div className=' flex items-center gap-2'> 
-                            <button className=' px-2 border hover:border-red-600 hover:text-red-600' onClick={() => setQuantity(quantity - 1)}>-</button> 
-                            {quantity} 
-                            <button className=' px-2 border hover:border-green-600 hover:text-green-600' onClick={() => setQuantity(quantity + 1)}>+</button> 
-                        </div>
 
-                    <button className=' border border-black flex items-center p-2 gap-2 hover:bg-black hover:text-white w-40 justify-center' onClick={()=> dispatch(setCartProduct({product: productDetails, quantity}))}> <BsCartPlus /> Add to Cart</button>
+                    <p>${productDetails.price}</p>
+                    {
+                        user.type === 'customer' &&
+                        <>
+                            <div className=' flex items-center gap-2'> 
+                                <button className=' px-2 border hover:border-red-600 hover:text-red-600' onClick={() => setQuantity(quantity - 1)}>-</button> 
+                                    {quantity} 
+                                <button className=' px-2 border hover:border-green-600 hover:text-green-600' onClick={() => setQuantity(quantity + 1)}>+</button> 
+                            </div>
+                            <button className=' border border-black flex items-center p-2 gap-2 hover:bg-black hover:text-white w-40 justify-center' onClick={()=> dispatch(setCartProduct({product: productDetails, quantity}))}> <BsCartPlus /> Add to Cart</button>
+                        </>
+                    }
 
                     <div>
                         <p className=' text-gray-600'>Sold By</p>

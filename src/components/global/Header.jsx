@@ -36,15 +36,12 @@ const navLinks = [
     },
 ]
 
-
 export default function HeaderClient() {
     const [open, setOpen] = useState(false);
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const { cartProducts } = useSelector((state) => state.cartProducts);
     const router = useRouter();
-
-    console.log('userCleared',user);
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -56,8 +53,21 @@ export default function HeaderClient() {
     const handleLogout = () => {
         dispatch(clearUser);
         localStorage.removeItem('token');
-        window.location.reload()
+        window.location.reload();
     }
+
+    const filteredNavLinks = navLinks.filter((el) => {
+        if (!user?.name) {
+            return el.label === 'Home' || el.label === 'Products';
+        }
+        if (user?.type === 'seller' && el.label === 'Orders') {
+            return false;
+        }
+        if (user?.type === 'customer' && el.label === 'My Shop') {
+            return false;
+        }
+        return true;
+    });
 
     return (
         <>
@@ -69,11 +79,9 @@ export default function HeaderClient() {
 
                     <div className=' hidden lg:flex items-center justify-between gap-5 font-poppinsRegular'>
                         {
-                            navLinks
-                                .filter((el) => (user?.type === 'seller' && el.label === 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
-                                .map((el) => (
-                                    <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
-                                ))
+                            filteredNavLinks.map((el) => (
+                                <Link href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
+                            ))
                         }
 
                         {
@@ -84,7 +92,7 @@ export default function HeaderClient() {
                         }
 
                         {
-                            user?.name && 
+                            user?.name &&
                             <AlertWrapper openButton={
                                 <button className='hover:text-gray-500 cursor-pointer'>
                                     {user?.name}
@@ -102,31 +110,38 @@ export default function HeaderClient() {
                             </AlertWrapper>
                         }
 
+                        {
+                            user.type === 'customer' && 
+                            <SheetWrapper openButton={
+                                <span className=' relative '>
+                                    <BsCart2 className=' w-6 h-6' /> 
+                                    <span className=' z-50 absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
+                                        {cartProducts?.length}
+                                    </span> 
+                                </span>
+                            }>
+                                <CartData />
+                            </SheetWrapper>
+                        }
 
-                        <SheetWrapper openButton={
-                            <span className=' relative '>
-                                <BsCart2 className=' w-6 h-6' /> 
-                                <span className=' z-50 absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
-                                    {cartProducts?.length}
-                                </span> 
-                            </span>
-                        }>
-                            <CartData />
-                        </SheetWrapper>
+                        
                     </div>
 
                     {/* Small Screen */}
                     <div className='  items-center gap-10 flex lg:hidden overflow-scroll'>
-                        <SheetWrapper openButton={
-                            <span className=' relative w-7 h-7'>
-                                <BsCart2 className=' w-6 h-6' /> 
-                                <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
-                                    {cartProducts?.length}
-                                </span> 
-                            </span>
-                        }>
-                            <CartData />
-                        </SheetWrapper>
+                        {
+                            user.type === 'customer' && 
+                            <SheetWrapper openButton={
+                                <span className=' relative w-7 h-7'>
+                                    <BsCart2 className=' w-6 h-6' /> 
+                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
+                                        {cartProducts?.length}
+                                    </span> 
+                                </span>
+                            }>
+                                <CartData />
+                            </SheetWrapper>
+                        }
 
                         <button onClick={() => setOpen(!open)}>
                             {open ? <RiCloseLargeLine className=' w-8 h-8 text-black' /> : <RxHamburgerMenu className=' w-8 h-8 text-black' />} 
@@ -140,16 +155,30 @@ export default function HeaderClient() {
                 className={`bg-white z-50 sticky top-24 w-full text-2xl gap-10 text-center flex flex-col font-poppinsRegular border-b ${open ? 'h-screen opacity-100 py-10' : 'h-0 opacity-0'} transition-all duration-300 ease-in-out overflow-hidden`}
             >
                 {
-                    navLinks
-                        .filter((el) => (user?.type === 'seller' && el.label === 'My Shop') || (user?.type === 'customer' && el.label === 'Orders'))
-                        .map((el) => (
-                            <Link onClick={() => setOpen(false)} href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
-                        ))
+                    filteredNavLinks.map((el) => (
+                        <Link onClick={() => setOpen(false)} href={el.url} className='hover:text-gray-500 cursor-pointer ' key={el.url}>{el.label}</Link>
+                    ))
                 }
-                <Link onClick={() => setOpen(false)} href={ user?.name ? '/profile' : '/signup'} className='hover:text-gray-500 cursor-pointer'>
-                    {user?.name ? user?.name : 'Sign up'}
-                </Link>
+                {
+                    user?.name &&
+                    <AlertWrapper openButton={
+                        <button className='hover:text-gray-500 cursor-pointer'>
+                            {user?.name}
+                        </button>
+                    }>
+                        <div className=' flex flex-col'>
+                            <div className=' flex gap-2 text-xl'>
+                                Welcome <strong>{user?.name}</strong>
+                            </div>
+                            <div className=' flex justify-end gap-3'>
+                                <button onClick={handleLogout} className=' bg-red-700 text-white p-3'>Logout</button>
+                                <AlertDialogCancel className=' bg-black text-white p-3'>Cancel</AlertDialogCancel>
+                            </div>
+                        </div>
+                    </AlertWrapper>
+                }
             </div>
         </>
     );
 }
+

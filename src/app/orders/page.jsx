@@ -85,7 +85,6 @@ export default function OrdersPage() {
 
 
   const onPaymentSuccess = async (paymentMethod, orderId, customerId, totalAmount) => {
-
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/api/payment', {
         method: 'POST',
@@ -105,11 +104,8 @@ export default function OrdersPage() {
       
       const data = await response.json();
 
-      console.log('resData', data);
-
-      if (data?.data?.url) {
-        setFetchOrder(fetchOrder + 1)
-        console.log('data', data);
+      if (response.ok) {
+        window.location.reload()
       }
     } catch (error) {
       console.error("Payment initiation failed:", error);

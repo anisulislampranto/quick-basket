@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import DropBorder from '../ui/DropBorder';
 import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
@@ -43,9 +43,11 @@ function CategoryProducts({ title, products }) {
   );
 }
 
-export default function ShopProducts({ products }) {
+export default function ShopProducts({ products, type ,setType, shopOrders }) {
   const activeProducts = products.filter((el) => el.isActive);
-  const [type, setType] = useState('products');
+
+  console.log('shopOrders', shopOrders);
+  
 
   const categories = [
     { title: 'Home And Living Products', products: activeProducts.filter((el) => el.category === 'home&Living') },
@@ -57,7 +59,6 @@ export default function ShopProducts({ products }) {
   return (
     <div className="container px-5">
 
-        
         <div className="flex bg-black p-1 mb-4 w-96">
             <button
                 type="button"
@@ -80,7 +81,13 @@ export default function ShopProducts({ products }) {
             <CategoryProducts key={category.title} title={category.title} products={category.products} />
           )) : 
           <div>
-            
+              {
+                shopOrders?.map((el) =>
+                  <div>
+                    <p>{el.name}</p>
+                  </div>
+                )
+              }
           </div>
         }
 

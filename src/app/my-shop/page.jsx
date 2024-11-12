@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import AddProductClient from '@/components/AddProduct/AddProduct';
@@ -10,19 +10,37 @@ import ShopProducts from '@/components/ShopProducts/ShopProductsClient';
 
 
 export default function MyShopClient() {
+    const [type, setType] = useState('products');
     const {user, isLoading} = useSelector((state) => state.user);
-    const router = useRouter()
+    const router = useRouter();
+    const [shopOrders, setShopOrders] = useState([])
 
     useEffect(() => {
+        (async()=>{
+            const token = localStorage.getItem('token')
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/shop/${user.shop?._id}/orders`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                const data = await res.json();
 
+                if (res.ok) {
+                    setShopOrders(data.orders)
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+    }, [type])
+
+    useEffect(() => {
         if (!user || !user?.email) {
             router.push('/signup')
         }
-
         if (user && user?.email && user.type !== 'seller') {
             router.back()
         }
-
     }, [user])
 
     if (user && user?.email && user.type !== 'seller') {
@@ -63,7 +81,7 @@ export default function MyShopClient() {
 
                     </div>
                     <div className=' flex flex-col container mx-auto pb-20'>
-                        <ShopProducts products={user?.shop?.products} />
+                        <ShopProducts shopOrders={shopOrders} setType={setType} type={type} products={user?.shop?.products} />
                     </div>
                 </>
 

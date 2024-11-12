@@ -30,8 +30,8 @@ const userSlice = createSlice({
     setProduct: (state, action) => {
       if (state.user?.shop) {
         state.user.shop.products = [
-          ...(state.user.shop.products || []),
           action.payload,
+          ...(state.user.shop.products || []),
         ];
       } else {
         state.user.shop = { products: [action.payload] };
