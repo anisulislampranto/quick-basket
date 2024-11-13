@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
             <GlobalLoader>
               <HeaderClient />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </GlobalLoader>
           </GoogleOAuthProvider>
         </StoreProvider>

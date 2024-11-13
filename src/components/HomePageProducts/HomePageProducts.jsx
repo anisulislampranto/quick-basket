@@ -3,6 +3,7 @@
 import Loader2 from '@/utils/Loader2';
 import ProductPlaceholder from '@/utils/ProductPlaceholder';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function HomePageProducts() {
@@ -51,7 +52,7 @@ export default function HomePageProducts() {
     }, [type]); // Fetch data whenever the type changes
 
     return (
-        <div className='container px-10 mx-auto py-20'>
+        <div className='container px-10 mx-auto pb-20'>
             <div className="flex bg-black p-1 mb-4 w-96">
                 <button
                     type="button"
@@ -76,7 +77,7 @@ export default function HomePageProducts() {
                     ) : type === 'trending' && trending.length > 0 ? (
                         <div className="flex flex-wrap justify-center md:justify-start gap-10">
                             {trending?.map((el) => (
-                                <div key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
+                                <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
                                     <div className="relative h-40 w-56">
                                         <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
                                     </div>
@@ -85,7 +86,7 @@ export default function HomePageProducts() {
                                         <p>${el.price}</p>
                                     </div>
                                     <p className='text-sm line-clamp-3'>{el.description}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     ) : (
@@ -100,7 +101,7 @@ export default function HomePageProducts() {
                     ) : type === 'new-arrivals' && newArrival.length > 0 ? (
                         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10">
                             {newArrival?.map((el) => (
-                                <div key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
+                                <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
                                     <div className="relative h-40 w-56">
                                         <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
                                     </div>
@@ -109,7 +110,7 @@ export default function HomePageProducts() {
                                         <p>${el.price}</p>
                                     </div>
                                     <p className='text-sm line-clamp-3'>{el.description}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     ) : (
