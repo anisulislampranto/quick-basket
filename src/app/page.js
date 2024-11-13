@@ -1,8 +1,10 @@
+import HeroClient from "@/components/Hero/HeroClient";
+
 export default function Home() {
   return (
     <div>
       <main>
-        <p className="text-5xl">hello</p>
+        <HeroClient />
       </main>
     </div>
   );

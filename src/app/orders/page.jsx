@@ -48,9 +48,9 @@ function StripePaymentForm({ onPaymentSuccess, customerId, orderId, totalAmount 
 
   return (
     <form onSubmit={handleSubmit} className="p-4 border rounded-md">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Card Details</label>
+      <label className="block text-sm font-medium text-gray-700 mb-1">Pay total ${totalAmount}</label>
       <CardElement className="p-2 border rounded-md" options={{ style: { base: { fontSize: '16px' } } }} />
-      <button type="submit" className="mt-4 bg-green-600 text-white p-2 rounded-md" disabled={!stripe}>
+      <button type="submit" className="mt-4 bg-black hover:bg-white hover:text-black border-2 border-black text-white p-2" disabled={!stripe}>
         Pay Now
       </button>
     </form>
@@ -139,7 +139,7 @@ export default function OrdersPage() {
       const updatedOrder = await response.json();
 
       if (response.ok) {
-        // Refresh orders after updating status
+        
           setOrders((prevOrders) => 
             prevOrders.map(order => 
               order._id === orderId ? { ...order, orderStatus: newStatus } : order
@@ -168,8 +168,6 @@ export default function OrdersPage() {
     <div className="container mx-auto py-10 px-10">
       <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
 
-      {
-        user.type === 'admin' && 
           <div className="flex bg-black p-1 mb-4 w-96">
               <button
                   type="button"
@@ -186,7 +184,6 @@ export default function OrdersPage() {
                   Delivered
               </button>
           </div>
-      }
 
       {
         fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p className=' text-center text-xl'>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
