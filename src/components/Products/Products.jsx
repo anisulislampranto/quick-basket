@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 
 function CategoryProducts({ title, products, user }) {
-  
+  //
   return (
     <div className="space-y-5 mt-10">
         <DropBorder>
