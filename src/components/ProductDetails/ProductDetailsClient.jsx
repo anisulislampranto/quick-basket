@@ -70,10 +70,17 @@ export default function ProductDetailsClient({productDetails}) {
                     <div>
                         <p className=' text-gray-600'>Sold By</p>
                         <div className=' relative h-20 w-20 border'>
-                            <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.shop.logo}`} alt='shopLogo' fill />
+                            <Image className=' absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails?.shop?.logo}`} alt='shopLogo' fill />
                         </div>
                         <p>{productDetails.shop.name}</p>
                     </div>
+                    {
+                        console.log( '${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails?.shop?.logo}', `${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails?.shop?.logo}`)
+                    }
+
+                    {
+                        console.log( '${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.images?.[0]}', `${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.images?.[0]}`)
+                    }
 
                 </div>
             </div>

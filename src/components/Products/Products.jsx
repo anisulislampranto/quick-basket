@@ -20,12 +20,14 @@ function CategoryProducts({ title, products, user }) {
             
             <Link href={`/products/${el._id}`} key={el._id} className="border-2 border-gray-400 p-5 hover:border-2 hover:border-black transition duration-150 ease-in-out space-y-2 max-w-64">
                 <div className="relative h-40 w-56">
-                  <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images[0]}`} alt="product image" fill />
+                  <Image className="absolute object-contain" src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images?.[0]}`} alt="product image" fill />
                 </div>
                 <div className='flex items-start gap-2 justify-between'>
                   <h2>{el.name}</h2>
                   <p>${el.price}</p>
                 </div>
+                
+                {console.log('${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images?.[0]}' , `${process.env.NEXT_PUBLIC_BACKEND_URL}/${el.images?.[0]}`)}
 
                 <p className=' text-sm line-clamp-3'>{el.description}</p>
 
