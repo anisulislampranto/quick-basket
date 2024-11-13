@@ -63,6 +63,7 @@ export default function OrdersPage() {
   const [fetchingOrders, setFetchingOrders] = useState(false);
   const router = useRouter();
   const [fetchOrder, setFetchOrder] = useState(0);
+  const [type, setType] = useState('all')
 
   console.log('orders', orders);
   console.log('fetchingOrders', fetchingOrders);
@@ -168,6 +169,26 @@ export default function OrdersPage() {
       <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
 
       {
+        user.type === 'admin' && 
+          <div className="flex bg-black p-1 mb-4 w-96">
+              <button
+                  type="button"
+                  onClick={() => setType('all')}
+                  className={`flex-1 p-1 ${type === 'all' ? 'bg-white text-black' : ' bg-black text-white'}`}
+              >
+                  All
+              </button>
+              <button
+                  type="button"
+                  onClick={() => setType('delivered')}
+                  className={`flex-1 p-1 ${type === 'delivered' ? 'bg-white text-black' : 'bg-black text-white'}`}
+              >
+                  Delivered
+              </button>
+          </div>
+      }
+
+      {
         fetchingOrders ? <Loader2 /> : !fetchingOrders && orders.length === 0 ? <p className=' text-center text-xl'>No orders yet</p> : !fetchingOrders && orders.length > 0 &&  
             <Table>
                 <TableHeader>
@@ -182,7 +203,7 @@ export default function OrdersPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {orders?.map((order, index) => (
+                  {orders?.filter((order) => type === 'all' ? order.orderStatus !== 'delivered' : order.orderStatus === 'delivered')?.map((order, index) => (
                       <TableRow key={order._id}>
                         <TableCell className="font-medium">{index + 1}</TableCell>
                         <TableCell>
