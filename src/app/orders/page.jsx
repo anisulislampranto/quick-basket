@@ -23,12 +23,13 @@ import ProductReview from '@/components/ProductReview/ProductReview';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-function StripePaymentForm({ onPaymentSuccess, customerId, orderId, totalAmount }) {
+function StripePaymentForm({ setPaying, paying, onPaymentSuccess, customerId, orderId, totalAmount }) {
 
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (event) => {
+    setPaying(true)
     event.preventDefault();
 
     if (!stripe || !elements) return;
@@ -41,8 +42,10 @@ function StripePaymentForm({ onPaymentSuccess, customerId, orderId, totalAmount 
     });
 
     if (error) {
+      setPaying(false)
       console.log('[error]', error);
     } else {
+      setPaying(true)
       console.log('[PaymentMethod]', paymentMethod);
       onPaymentSuccess(paymentMethod, orderId, customerId, totalAmount);
     }
@@ -53,7 +56,7 @@ function StripePaymentForm({ onPaymentSuccess, customerId, orderId, totalAmount 
       <label className="block text-sm font-medium text-gray-700 mb-1">Pay total ${totalAmount}</label>
       <CardElement className="p-2 border rounded-md" options={{ style: { base: { fontSize: '16px' } } }} />
       <button type="submit" className="mt-4 bg-black hover:bg-white hover:text-black border-2 border-black text-white p-2" disabled={!stripe}>
-        Pay Now
+          {paying ? 'Paying' : 'Pay Now'}
       </button>
     </form>
   );
@@ -65,11 +68,9 @@ export default function OrdersPage() {
   const [fetchingOrders, setFetchingOrders] = useState(false);
   const router = useRouter();
   const [fetchOrder, setFetchOrder] = useState(0);
-  const [type, setType] = useState('all')
+  const [type, setType] = useState('all');
+  const [paying, setPaying] = useState(false)
 
-  console.log('orders', orders);
-  console.log('fetchingOrders', fetchingOrders);
-  
 
   useEffect(() => {
     (async () => {
@@ -97,6 +98,7 @@ export default function OrdersPage() {
 
   const onPaymentSuccess = async (paymentMethod, orderId, customerId, totalAmount) => {
     try {
+      setPaying(true)
       const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/api/payment', {
         method: 'POST',
         headers: {
@@ -116,9 +118,11 @@ export default function OrdersPage() {
       const data = await response.json();
 
       if (response.ok) {
-        window.location.reload()
+        setPaying(false)
+        setFetchOrder(fetchOrder + 1)
       }
     } catch (error) {
+      setPaying(false)
       console.error("Payment initiation failed:", error);
     }
   };
@@ -167,7 +171,7 @@ export default function OrdersPage() {
   }, [])
 
   return (
-    <div className="container mx-auto py-20 px-10">
+    <div className="container mx-auto py-20 px-10 min-h-[80vh]">
           <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
           <div className="flex bg-black p-1 mb-4 w-96">
               <button
@@ -243,19 +247,19 @@ export default function OrdersPage() {
                         <TableCell className="text-right">${order.totalAmount}</TableCell>
                         {
                           order.payment.status === 'unpaid' && user.type !== 'admin' && 
-                          <AlertWrapper 
+                          <Modal 
                             openButton={
                               <TableCell className="text-right hover:text-green-600 cursor-pointer">Pay Now</TableCell>
-                          }>
-                            {/* Stripe Payment  */}
-                            <div>
-                              <h3 className="text-xl font-semibold">Complete Your Payment</h3>
-                              <Elements stripe={stripePromise}>
-                                <StripePaymentForm totalAmount={order.totalAmount} orderId={order._id} customerId={user?._id} onPaymentSuccess={onPaymentSuccess} />
-                              </Elements>
-                            </div>
-                            {/* Stripe Payment */}
-                          </AlertWrapper>
+                            }
+                            content={
+                              <div>
+                                <h3 className="text-xl font-semibold">Complete Your Payment</h3>
+                                <Elements stripe={stripePromise}>
+                                  <StripePaymentForm setPaying={setPaying} paying={paying} totalAmount={order.totalAmount} orderId={order._id} customerId={user?._id} onPaymentSuccess={onPaymentSuccess} />
+                                </Elements>
+                              </div>
+                            }
+                          />
                         }
                         {
                           (order.orderStatus === 'delivered' && user.type === 'customer') &&  

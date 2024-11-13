@@ -69,7 +69,7 @@ export default function Checkout() {
     };
 
     return (
-        <div className='container px-10 mx-auto space-y-10 py-16'>
+        <div className='container px-10 mx-auto space-y-10 py-16 min-h-[70vh]'>
             <h1 className='text-4xl'>Checkout</h1>
 
             <div className='flex flex-col-reverse gap-10 xl:flex-row'>
