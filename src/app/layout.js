@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { StoreProvider } from "@/lib/StoreProvider";
 import HeaderClient from "@/components/global/Header";
 import GlobalLoader from "@/utils/GlobalLoader";
+import Footer from "@/components/global/Footer";
 
 export const metadata = {
   title: "Quick Basket",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
             <GlobalLoader>
               <HeaderClient />
               {children}
+              {/* <Footer /> */}
             </GlobalLoader>
           </GoogleOAuthProvider>
         </StoreProvider>

@@ -136,17 +136,21 @@ export default function OrdersPage() {
       if (!response.ok) throw new Error('Failed to update status');
   
       const updatedOrder = await response.json();
-  
-      // Refresh orders after updating status
-      setOrders((prevOrders) => 
-        prevOrders.map(order => 
-          order._id === orderId ? { ...order, orderStatus: newStatus } : order
-        )
-      );
-  
-      if (newStatus === 'delivered') {
-        window.location.reload(); 
+
+      if (response.ok) {
+        // Refresh orders after updating status
+          setOrders((prevOrders) => 
+            prevOrders.map(order => 
+              order._id === orderId ? { ...order, orderStatus: newStatus } : order
+            )
+          );
+      
+          if (newStatus === 'delivered') {
+            window.location.reload(); 
+          }
       }
+  
+      
     } catch (error) {
       console.error('Error updating order status:', error);
     }
@@ -200,11 +204,11 @@ export default function OrdersPage() {
                                 value={order.orderStatus}
                                 onChange={(e) => handleStatusChange(order._id, e.target.value)}
                               >
-                                <option value="pending" disabled={order.orderStatus === "pending"}>Pending</option>
-                                <option value="processing" disabled={order.orderStatus === "processing"}>Processing</option>
-                                <option value="shipped" disabled={order.orderStatus === "shipped" || order.payment.status === 'unpaid'}>Shipped</option>
+                                <option value="pending" disabled={order.orderStatus === "pending" || order.orderStatus === "delivered"}>Pending</option>
+                                <option value="processing" disabled={order.orderStatus === "processing" || order.orderStatus === "delivered"}>Processing</option>
+                                <option value="shipped" disabled={order.orderStatus === "shipped" || order.payment.status === 'unpaid' || order.orderStatus === "delivered"}>Shipped</option>
                                 <option value="delivered" disabled={order.orderStatus === "delivered" || order.payment.status === 'unpaid'}>Delivered</option>
-                                <option value="cancelled" disabled={order.orderStatus === "cancelled"}>Cancelled</option>
+                                <option value="cancelled" disabled={order.orderStatus === "cancelled" || order.orderStatus === "delivered"}>Cancelled</option>
                               </select>
                             : 
                             order.orderStatus

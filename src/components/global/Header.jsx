@@ -45,7 +45,7 @@ export default function HeaderClient() {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        if (token && !user.email) {
+        if (token && !user?.email) {
             dispatch(fetchMe());
         }
     }, []);
@@ -114,7 +114,7 @@ export default function HeaderClient() {
                         }
 
                         {
-                            user.type === 'customer' && 
+                            user?.type === 'customer' && 
                             <SheetWrapper openButton={
                                 <span className=' relative '>
                                     <BsCart2 className=' w-6 h-6' /> 
@@ -133,7 +133,7 @@ export default function HeaderClient() {
                     {/* Small Screen */}
                     <div className='  items-center gap-10 flex lg:hidden overflow-scroll'>
                         {
-                            user.type === 'customer' && 
+                            user?.type === 'customer' && 
                             <SheetWrapper openButton={
                                 <span className=' relative w-7 h-7'>
                                     <BsCart2 className=' w-6 h-6' /> 
