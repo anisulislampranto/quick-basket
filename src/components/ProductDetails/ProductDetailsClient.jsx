@@ -16,6 +16,9 @@ export default function ProductDetailsClient({productDetails}) {
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch()
 
+    console.log('productDetails', productDetails);
+    
+
     return (
         <div className=' flex flex-col gap-5 container mx-auto py-10'>
             <div className=' flex gap-5 flex-col lg:flex-row px-5'>
@@ -80,7 +83,28 @@ export default function ProductDetailsClient({productDetails}) {
                         <p className=' text-black'>{productDetails.description}</p>
                 </AccordionWrapper>
                 <AccordionWrapper title={'Reviews'}>
-                        <p className=' text-black'>{productDetails.description}</p>
+                    <ul className='flex flex-col gap-5'>
+                        {productDetails?.reviews?.map((el) => 
+                            <li className=' flex flex-col gap-2'>
+                                <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+                                    {[...Array(5)].map((_, index) => (
+                                    <span
+                                        key={index}
+                                        style={{
+                                        color: index < el?.rating ? 'gold' : 'gray',
+                                        fontSize: '20px',
+                                        marginRight: '2px',
+                                        }}
+                                    >
+                                        ★
+                                    </span>
+                                    ))}
+                                </div>
+                                <p>{el.comment}</p>
+                                <p>by <strong>{el.user.name}</strong></p>
+                            </li>
+                        )}
+                    </ul>
                 </AccordionWrapper>
             </div>
         </div>

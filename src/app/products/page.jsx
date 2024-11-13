@@ -28,8 +28,11 @@ export default function ProductsClient() {
     };
 
     useEffect(() => {
-        fetchProducts(); // Fetch products on initial load and whenever filters change
+        fetchProducts();
     }, [name, minPrice, maxPrice]);
+
+    console.log('products', products);
+    
 
     return (
         <div className='container mx-auto pb-20 px-10'>
