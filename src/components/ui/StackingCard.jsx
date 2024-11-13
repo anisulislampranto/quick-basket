@@ -69,9 +69,9 @@ export default function StackingCard() {
               <RandomizedTextEffect text='Your One-Stop Shop for Quality and Value' />
             </h2>
             
-            <p className=' text-center text-sm md:text-base'>
+            <span className=' text-center text-sm md:text-base'>
               <RandomizedTextEffect text='Browse our wide range of products and discover unbeatable deals today.' />
-            </p>
+            </span>
           </section>
         </>
 
@@ -136,7 +136,6 @@ export const Card = ({
             <span className="flex items-center gap-2 pt-2">
               <Link
                 href={'/products'}
-                target="_blank"
                 className="underline cursor-pointer"
               >
                 See more
