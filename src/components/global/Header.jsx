@@ -137,7 +137,7 @@ export default function HeaderClient() {
                             <SheetWrapper openButton={
                                 <span className=' relative w-7 h-7'>
                                     <BsCart2 className=' w-6 h-6' /> 
-                                    <span className=' absolute -top-4 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
+                                    <span className=' absolute -top-1 -right-4 bg-black text-white border rounded-full h-6 w-6 text-sm'>
                                         {cartProducts?.length}
                                     </span> 
                                 </span>
