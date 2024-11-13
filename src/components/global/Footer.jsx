@@ -7,13 +7,13 @@ import logo from '../../assets/quick-basket.png'
 
 function Footer() {
   return (
-    <>
-        <footer
-            className="footer-bg relative 2xl:h-[550px] h-fit lg:pb-20 mb-8 overflow-hidden radial-gradient-bg
+    <footer className=' relative'>
+        <div
+            className="footer-bg relative 2xl:h-[550px] h-fit lg:pb-20 overflow-hidden radial-gradient-bg
                 [--gradient-center:#f3f4f6] [--gradient-edge:#f3f4f6]
                 dark:[--gradient-center:#02081765] dark:[--gradient-edge:#020817]"
         >
-            <div className="gap-10 sm:flex justify-between p-5 2xl:py-10 py-5 dark:bg-[#4c61ff]   bg-black rounded-sm rounded-b-none text-white">
+            <div className="gap-10 sm:flex justify-between p-5 px-5 md:px-20 2xl:py-10 py-5 dark:bg-[#4c61ff]  bg-black rounded-sm rounded-b-none text-white">
             <div className="w-fit flex-col  flex  justify-center">
                 <div className=' relative h-44 w-44'>
                     <Image className=' absolute object-contain' src={logo} alt='logo' fill />
@@ -29,9 +29,9 @@ function Footer() {
 
             <div className="sm:block flex sm:mt-0 mt-4  gap-2 sm:w-auto w-full sm:space-y-2 relative z-[1]">
                 <a
-                href="https://www.linkedin.com/in/naymur-rahman/"
-                target="_blank"
-                className="bg-black sm:w-auto w-full grid place-content-center 2xl:h-40 h-32 2xl:p-10 p-5 border-2 border-white"
+                    href="https://www.linkedin.com/in/anisul-islam-pranto/"
+                    target="_blank"
+                    className="bg-black sm:w-auto w-full grid place-content-center 2xl:h-40 h-32 2xl:p-10 p-5 border-2 border-white"
                 >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -48,9 +48,9 @@ function Footer() {
                 </svg>
                 </a>
                 <a
-                href="https://x.com/naymur_dev"
-                target="_blank"
-                className="bg-black sm:w-auto w-full  grid place-content-center  2xl:h-40 h-32 2xl:p-10 p-5 border-2 border-white"
+                    href="https://x.com/aipranto"
+                    target="_blank"
+                    className="bg-black sm:w-auto w-full  grid place-content-center  2xl:h-40 h-32 2xl:p-10 p-5 border-2 border-white"
                 >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -74,9 +74,9 @@ function Footer() {
                     className="2xl:text-[11rem] text-[12vw]"
                 />
             </div>
-        </footer>
-        <div className=' text-center bg-black p-3 text-white -mt-20 '>© {new Date().getFullYear()} All rights reserved.</div>
-    </>
+        </div>
+        <div className='text-center bg-black p-3 text-white absolute bottom-0 left-0 right-0'>© {new Date().getFullYear()} All rights reserved.</div>
+    </footer>
   );
 }
 export default Footer;

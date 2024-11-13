@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { setCartProduct } from '@/lib/features/cart/cartSlice';
 import { BsCartPlus } from "react-icons/bs";
 import { useSelector } from 'react-redux';
+import { TbTruckDelivery } from "react-icons/tb";
+
 
 export default function ProductDetailsClient({productDetails}) {
     const {user} = useSelector((state) => state.user)
@@ -53,6 +55,14 @@ export default function ProductDetailsClient({productDetails}) {
                             <button className=' border border-black flex items-center p-2 gap-2 hover:bg-black hover:text-white w-40 justify-center' onClick={()=> dispatch(setCartProduct({product: productDetails, quantity}))}> <BsCartPlus /> Add to Cart</button>
                         </>
                     }
+
+                    <div>
+                        <div className=' flex items-center gap-2'>
+                            <TbTruckDelivery className=' w-8 h-8' />
+                            <p>Standard Delivery</p>
+                        </div>
+                        <p className=' text-sm text-gray-500'>Get withing 5-7 Days.</p>
+                    </div>
 
                     <div>
                         <p className=' text-gray-600'>Sold By</p>

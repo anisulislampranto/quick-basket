@@ -18,6 +18,8 @@ import { SiTicktick } from "react-icons/si";
 
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import Modal from '@/components/ui/Modal';
+import ProductReview from '@/components/ProductReview/ProductReview';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
@@ -165,9 +167,8 @@ export default function OrdersPage() {
   }, [])
 
   return (
-    <div className="container mx-auto py-10 px-10">
-      <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
-
+    <div className="container mx-auto py-20 px-10">
+          <h1 className="text-5xl mb-10">{user.type === 'customer' &&  'My'} Orders</h1>
           <div className="flex bg-black p-1 mb-4 w-96">
               <button
                   type="button"
@@ -249,6 +250,13 @@ export default function OrdersPage() {
                             </div>
                             {/* Stripe Payment */}
                           </AlertWrapper>
+                        }
+                        {
+                          (order.orderStatus === 'delivered' && user.type === 'customer') &&  
+                            <Modal 
+                              openButton={<TableCell className="text-right hover:text-green-600 cursor-pointer">Review</TableCell>}
+                              content={<ProductReview />} 
+                            />
                         }
                       </TableRow>
                   ))}
