@@ -53,7 +53,7 @@ export default function HomePageProducts() {
 
     return (
         <div className='container px-10 mx-auto pb-20'>
-            <div className="flex bg-black p-1 mb-4 w-96">
+            <div className="flex bg-black p-1 mb-4 max-w-96">
                 <button
                     type="button"
                     onClick={() => setType('trending')}

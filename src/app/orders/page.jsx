@@ -208,7 +208,13 @@ export default function OrdersPage() {
                             {order.items?.map((product, i) => (
                               <span key={product.product._id} className=' flex items-center'>
                                   {product.orderStatus === 'accepted'? <SiTicktick className=' text-green-700 h-3 w-3'  /> : <SiTicktick className=' text-red-700 h-3 w-3' />}
-                                  {product.product.name}
+                                  {
+                                    (order.orderStatus === 'delivered' && user.type === 'customer') ?
+                                      <Modal 
+                                        openButton={<TableCell className="text-right hover:text-green-600 cursor-pointer">{product.product.name}</TableCell>}
+                                        content={<ProductReview product={product} />} 
+                                      /> : product.product.name
+                                  }
                                   {i < order.items.length - 1 && ", "}
                               </span>
                             ))}
@@ -255,7 +261,7 @@ export default function OrdersPage() {
                           (order.orderStatus === 'delivered' && user.type === 'customer') &&  
                             <Modal 
                               openButton={<TableCell className="text-right hover:text-green-600 cursor-pointer">Review</TableCell>}
-                              content={<ProductReview />} 
+                              content={<ProductReview products={order?.items} />} 
                             />
                         }
                       </TableRow>
