@@ -122,7 +122,7 @@ export default function AuthenticationClient() {
     
 
     return (
-        <div className=' flex items-start justify-center w-screen p-5'>
+        <div className=' flex items-start justify-center w-screen h-[130vh] md:h-[100vh] p-5'>
             <DropBorder>
                 <div className='max-w-4xl mx-auto flex flex-col md:flex-row gap-10 items-center bg-white p-3 md:p-14'>
                     <div className=' flex flex-col items-center w-full md:w-[55%]'>
