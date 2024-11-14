@@ -75,7 +75,7 @@ function Footer() {
                 />
             </div>
         </div>
-        <div className='text-center bg-black p-3 text-white absolute bottom-0 left-0 right-0'>© {new Date().getFullYear()} All rights reserved.</div>
+        <div className=' -mb-10 md:mb-0 sm:block text-center bg-black p-3 text-white absolute bottom-0 left-0 right-0'>© {new Date().getFullYear()} All rights reserved.</div>
     </footer>
   );
 }
