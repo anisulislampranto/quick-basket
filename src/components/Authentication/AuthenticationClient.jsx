@@ -9,8 +9,6 @@ import Button from '../ui/Button';
 import DropBorder from '../ui/DropBorder';
 import Link from 'next/link';
 import { FaGoogle } from "react-icons/fa6";
-import { FaFacebookF } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
 import useGoogleOAuthLogin from '@/hooks/useGoogleOAuthLogin';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
