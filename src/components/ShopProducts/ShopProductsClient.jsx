@@ -62,7 +62,7 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
   const acceptOrderItem = async (orderId, itemId) => {
     setLoadingItem(itemId);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('quickBasketToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${orderId}/item/${itemId}/accept`, {
         method: "PUT",
         headers: {
@@ -91,7 +91,7 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
   const handleAcceptAll = async (orderId) => {
     setOrderLoading(orderId);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('quickBasketToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${orderId}/accept-all-items/${user.shop?._id}`, {
         method: 'PUT',
         headers: {

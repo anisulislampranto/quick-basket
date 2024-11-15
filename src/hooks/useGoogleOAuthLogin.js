@@ -26,7 +26,7 @@ const useGoogleOAuthLogin = () => {
         const data = await result.json();
 
         if (result.ok) {
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("quickBasketToken", data.token);
           dispatch(setUser({ ...data.user, token: data.token }));
 
           // setUser({ token: data.token, ...data.user });

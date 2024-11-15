@@ -1,5 +1,5 @@
 export const getMe = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("quickBasketToken");
 
   let response;
 

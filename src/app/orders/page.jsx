@@ -74,7 +74,7 @@ export default function OrdersPage() {
 
   useEffect(() => {
     (async () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('quickBasketToken');
         try {
           setFetchingOrders(true)
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders`, {
@@ -128,7 +128,7 @@ export default function OrdersPage() {
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('quickBasketToken');
   
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/update-status`, {

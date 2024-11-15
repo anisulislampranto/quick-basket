@@ -18,7 +18,7 @@ export default function MyShopClient() {
 
     useEffect(() => {
         (async()=>{
-            const token = localStorage.getItem('token')
+            const token = localStorage.getItem('quickBasketToken')
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/shop/${user.shop?._id}/orders`, {
                     headers: { Authorization: `Bearer ${token}` },

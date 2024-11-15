@@ -64,7 +64,7 @@ export default function AuthenticationClient() {
     
           if (userData.data?.email) {
     
-            localStorage.setItem('token', userData.data.token)
+            localStorage.setItem('quickBasketToken', userData.data.token)
             // localStorage.setItem('user', JSON.stringify(userData.data));
             dispatch(setUser(userData.data))
 

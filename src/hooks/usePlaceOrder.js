@@ -42,7 +42,7 @@ export const usePlaceOrder = () => {
     console.log("productsData", productsData);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("quickBasketToken");
       setPlaceOrderLoading(true);
       setPlaceOrderError(null);
 

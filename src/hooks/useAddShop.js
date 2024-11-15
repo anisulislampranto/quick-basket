@@ -12,7 +12,7 @@ const useAddShop = () => {
   const [addShopSuccess, setAddShopSuccess] = useState(false);
 
   const handleAddShop = async (data) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("quickBasketToken");
     setAddShopLoading(true);
     setAddShopError(null);
 

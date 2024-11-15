@@ -21,7 +21,7 @@ export default function ProductReview({product}) {
 
     try {
       setLoading(true)
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('quickBasketToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${product.product?._id}/review`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },

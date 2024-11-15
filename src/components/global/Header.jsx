@@ -44,7 +44,7 @@ export default function HeaderClient() {
     const router = useRouter();
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('quickBasketToken')
         if (token && !user?.email) {
             dispatch(fetchMe());
         }
