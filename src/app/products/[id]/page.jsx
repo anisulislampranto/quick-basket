@@ -37,7 +37,7 @@ export default async function Page({ params }) {
   const productDetails = await getProductDetails(params.id);
 
   if (!productDetails) {
-    return <div className="h-screen text-center flex items-center justify-center">No details found for this Product.</div>;
+    return <div className="h-screen text-center flex items-center justify-center">No details found for this Product..</div>;
   }
 
   return <ProductDetailsClient productDetails={productDetails?.product} />;
