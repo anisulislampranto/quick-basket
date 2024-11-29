@@ -16,8 +16,6 @@ export default function ProductDetailsClient({productDetails}) {
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch()
 
-    console.log('productDetails', productDetails);
-    
 
     return (
         <div className=' flex flex-col gap-5 container mx-auto py-10'>
@@ -39,7 +37,7 @@ export default function ProductDetailsClient({productDetails}) {
                     </ul>
                 </div>
 
-                <div className='lg:pt-20 lg:fixed lg:h-screen w-full lg:w-[30%] lg:right-0 lg:top-20 lg:bottom-0 border p-5 flex flex-col sm:flex-row justify-center items-center lg:items-start lg:justify-start lg:flex-col gap-5'>
+                <div className='lg:fixed lg:h-[30rem] w-full lg:w-[30%] lg:right-0 lg:top-[10rem] z-40 border-black bg-white lg:bottom-0 border-2 p-5 flex flex-col md:flex-row justify-center items-center lg:items-start lg:justify-start lg:flex-col gap-5'>
                     
                     <div>    
                         <p className=' capitalize'>{productDetails.category.split('&').join(' & ')}</p>
