@@ -90,7 +90,7 @@ export default function HomePageProducts() {
                             ))}
                         </div>
                     ) : (
-                        'No Product Found'
+                        <p className=' h-72 flex items-center justify-center'>No Product Found</p> 
                     )}
                 </div>
 
@@ -114,7 +114,7 @@ export default function HomePageProducts() {
                             ))}
                         </div>
                     ) : (
-                        'No Product Found'
+                        <p className=' h-72 flex items-center justify-center'>No Product Found</p> 
                     )}
                 </div>
 
