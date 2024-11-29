@@ -155,7 +155,7 @@ export default function HeaderClient() {
 
             {/* Dropdown For Small screen */}
             <div 
-                className={`bg-white z-50 sticky top-24 w-full text-2xl gap-10 text-center flex flex-col font-poppinsRegular border-b ${open ? 'h-screen opacity-100 py-10' : 'h-0 opacity-0'} transition-all duration-300 ease-in-out overflow-hidden`}
+                className={`bg-white z-50 fixed top-24 w-full text-2xl gap-10 text-center flex flex-col font-poppinsRegular border-b ${open ? 'h-screen opacity-100 py-10' : 'h-0 opacity-0'} transition-all duration-300 ease-in-out overflow-hidden`}
             >
                 {
                     filteredNavLinks.map((el) => (

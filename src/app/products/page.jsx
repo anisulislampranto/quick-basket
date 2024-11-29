@@ -49,7 +49,7 @@ export default function ProductsClient() {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder='Search by product name'
-                                className=' focus:outline-none rounded-none border border-black p-2 max-w-[16rem] '
+                                className=' focus:outline-none rounded-none border border-black p-2 max-w-[16rem] border-b-0'
                             />
                         </div>
                         
@@ -60,7 +60,7 @@ export default function ProductsClient() {
                                     value={minPrice}
                                     onChange={(e) => setMinPrice(e.target.value)}
                                     placeholder='Min Price'
-                                    className='focus:outline-none rounded-none border border-black p-2 max-w-[8rem]'
+                                    className='focus:outline-none rounded-none border border-black p-2 max-w-[8rem] border-r-0'
                                 />
 
                                 <input

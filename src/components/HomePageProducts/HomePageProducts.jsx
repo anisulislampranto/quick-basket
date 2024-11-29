@@ -1,6 +1,5 @@
 'use client';
 
-import Loader2 from '@/utils/Loader2';
 import ProductPlaceholder from '@/utils/ProductPlaceholder';
 import Image from 'next/image';
 import Link from 'next/link';

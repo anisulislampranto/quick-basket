@@ -4,7 +4,7 @@ export default function ProductPlaceholder() {
     return (
         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-start md:overflow-scroll gap-10 h-[19rem]">
             {Array(6).fill(0).map((_, index) => (
-                <div key={index} className="border-2 border-gray-100 p-5 hover:border-2 transition duration-500 ease-in-out space-y-2 max-w-64 bg-gray-100 animate-pulse">
+                <div key={index} className="border-2 border-gray-100 p-5 hover:border-2 transition duration-1000 ease-in-out space-y-2 max-w-64 bg-gray-100 animate-pulse">
                     <div className="relative h-40 w-56 bg-gray-200 rounded-lg">
                         {/* Placeholder for image */}
                     </div>
