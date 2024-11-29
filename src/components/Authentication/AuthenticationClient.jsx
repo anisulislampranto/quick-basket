@@ -14,9 +14,11 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/lib/features/user/userSlice';
+import { useToast } from '@/hooks/use-toast';
 
 
 export default function AuthenticationClient() {
+    const { toast } = useToast()
     const dispatch = useDispatch();
     const { googleLogin, loading, error } = useGoogleOAuthLogin();
     const {user, isLoading} = useSelector((state) => state.user)
@@ -46,9 +48,10 @@ export default function AuthenticationClient() {
     
           const userData = await res.json();
 
-          if (res.status === 401) {
+          if (res.status === 401 || 404) {
               setBtnState('failed');
-              alert("User doesn't exist")
+              toast({title: "User doesn't exist!! Try Sign Up"})
+              router.push('signup')
               setTimeout(() => {
                 setBtnState('') 
             }, 2000);
@@ -56,7 +59,7 @@ export default function AuthenticationClient() {
     
             if (res.status === 403) {
               setBtnState('');
-              alert('Already have an account try Sign In')
+              toast({title: 'Already have an account!! try Sign In'})
               router.push('signin')
           }
     

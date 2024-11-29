@@ -5,6 +5,7 @@ import { StoreProvider } from "@/lib/StoreProvider";
 import HeaderClient from "@/components/global/Header";
 import GlobalLoader from "@/utils/GlobalLoader";
 import Footer from "@/components/global/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Quick Basket",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
             </GlobalLoader>
           </GoogleOAuthProvider>
         </StoreProvider>
+        <Toaster />
       </body>
     </html>
   );
