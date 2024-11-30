@@ -52,7 +52,7 @@ export default function HeaderClient() {
 
     const handleLogout = () => {
         dispatch(clearUser);
-        localStorage.removeItem('token');
+        localStorage.removeItem('quickBasketToken');
         window.location.reload();
     }
 
