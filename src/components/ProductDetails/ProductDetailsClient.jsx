@@ -8,6 +8,7 @@ import { setCartProduct } from '@/lib/features/cart/cartSlice';
 import { BsCartPlus } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { TbTruckDelivery } from "react-icons/tb";
+import CustomerChat from '../Chat/CustomerChat';
 
 
 export default function ProductDetailsClient({productDetails}) {
@@ -18,6 +19,7 @@ export default function ProductDetailsClient({productDetails}) {
 
     return (
         <div className=' flex flex-col gap-5 container mx-auto py-10'>
+            <CustomerChat product={productDetails} user={user} />
             <div className=' flex gap-5 flex-col lg:flex-row px-5'>
                 <div className=' flex flex-col items-center gap-5 w-full lg:w-[60%] mt-5'>
                     {/* Big Image */}
