@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import EditProduct from '../EditProduct/EditProduct';
 import DrawerWrapper from '../ui/DrawerWrapper';
 import { useSelector } from 'react-redux';
+import ShopChat from '../Chat/ShopChat';
 
 function CategoryProducts({ title, products }) {
   return (
@@ -40,7 +41,7 @@ function CategoryProducts({ title, products }) {
     </div>
   );
 }
-export default function ShopProducts({ products, type, setType, shopOrders, fetchOrders, setFetchOrders }) {
+export default function ShopProducts({ products, type, setType, shopOrders, fetchOrders, setFetchOrders, shop }) {
   const activeProducts = products.filter((el) => el.isActive);
   const { user } = useSelector((state) => state.user);
   const [loadingItem, setLoadingItem] = useState();
@@ -136,13 +137,24 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
             >
                 Orders
             </button>
+            <button
+                type="button"
+                onClick={() => setType('messages')}
+                className={`flex-1 p-1 ${type === 'messages' ? 'bg-white text-black' : 'bg-black text-white'}`}
+            >
+                Messages
+            </button>
         </div>
 
         {type === 'products' ? (
           categories.map((category) => (
             <CategoryProducts key={category.title} title={category.title} products={category.products} />
           ))
-        ) : (
+        ) : type === 'messages' ? 
+          <>
+            <ShopChat shopId={shop._id} />
+          </> 
+        : (
           <>
             <div className="flex bg-black p-1 mb-4 w-96 mt-10 md:mt-0">
               <button

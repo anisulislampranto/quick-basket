@@ -82,7 +82,7 @@ export default function MyShopClient() {
 
                     </div>
                     <div className=' flex flex-col container mx-auto pb-20'>
-                        <ShopProducts fetchOrders={fetchOrders} setFetchOrders={setFetchOrders} shopOrders={shopOrders} setType={setType} type={type} products={user?.shop?.products} />
+                        <ShopProducts shop={user.shop} fetchOrders={fetchOrders} setFetchOrders={setFetchOrders} shopOrders={shopOrders} setType={setType} type={type} products={user?.shop?.products} />
                     </div>
                 </>
 

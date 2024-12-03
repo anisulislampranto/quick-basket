@@ -15,6 +15,9 @@ const initialState = {
 export const fetchMe = createAsyncThunk("user/fetchMe", async () => {
   const data = await getMe();
 
+  if (data.message === "Token has expired. Please log in again.") {
+    localStorage.removeItem("quickBasketToken");
+  }
   console.log("getMe", data);
 
   return data?.data;
