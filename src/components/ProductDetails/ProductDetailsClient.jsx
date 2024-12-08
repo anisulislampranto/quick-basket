@@ -15,12 +15,14 @@ export default function ProductDetailsClient({productDetails}) {
     const {user} = useSelector((state) => state.user)
     const [selectedImage, setSelectedImage] = useState(null);
     const [quantity, setQuantity] = useState(1);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
 
     return (
-        <div className=' flex flex-col gap-5 container mx-auto py-10'>
-            <CustomerChat product={productDetails} shopId={productDetails.shop._id} customerId={user._id} />
+        <div className='flex flex-col gap-5 container mx-auto py-10'>
+            {
+                user?.email &&  <CustomerChat product={productDetails} shopId={productDetails.shop._id} customerId={user._id} />
+            }
             <div className=' flex gap-5 flex-col lg:flex-row px-5'>
                 <div className=' flex flex-col items-center gap-5 w-full lg:w-[60%] mt-5'>
                     {/* Big Image */}
