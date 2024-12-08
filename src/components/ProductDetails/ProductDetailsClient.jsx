@@ -21,7 +21,7 @@ export default function ProductDetailsClient({productDetails}) {
     return (
         <div className='flex flex-col gap-5 container mx-auto py-10'>
             {
-                user?.email &&  <CustomerChat product={productDetails} shopId={productDetails.shop._id} customerId={user._id} />
+                user?.email &&  <CustomerChat product={productDetails} shop={productDetails.shop} customerId={user._id} />
             }
             <div className=' flex gap-5 flex-col lg:flex-row px-5'>
                 <div className=' flex flex-col items-center gap-5 w-full lg:w-[60%] mt-5'>
@@ -41,7 +41,7 @@ export default function ProductDetailsClient({productDetails}) {
                     </ul>
                 </div>
 
-                <div className='lg:fixed lg:h-[33rem] w-full lg:w-[30%] lg:right-0 lg:top-[10rem] z-40 border-black bg-white lg:bottom-0 border-2 p-5 flex flex-col md:flex-row justify-center items-center lg:items-start lg:justify-start lg:flex-col gap-5'>
+                <div className='lg:fixed lg:h-[33rem] w-full lg:w-[30%] lg:right-0 lg:top-[10rem] z-40 border-black bg-white lg:bottom-0 border-2 lg:border-r-0 p-5 flex flex-col md:flex-row justify-center items-center lg:items-start lg:justify-start lg:flex-col gap-5'>
                     
                     <div>    
                         <p className=' capitalize'>{productDetails.category.split('&').join(' & ')}</p>
@@ -91,6 +91,7 @@ export default function ProductDetailsClient({productDetails}) {
                 <AccordionWrapper title={'Description'}>
                         <p className=' text-black'>{productDetails.description}</p>
                 </AccordionWrapper>
+
                 <AccordionWrapper title={'Reviews'}>
                     <ul className='flex flex-col gap-5'>
                         {productDetails?.reviews?.map((el) => 
@@ -100,9 +101,9 @@ export default function ProductDetailsClient({productDetails}) {
                                     <span
                                         key={index}
                                         style={{
-                                        color: index < el?.rating ? 'gold' : 'gray',
-                                        fontSize: '20px',
-                                        marginRight: '2px',
+                                            color: index < el?.rating ? 'gold' : 'gray',
+                                            fontSize: '20px',
+                                            marginRight: '2px',
                                         }}
                                     >
                                         ★
