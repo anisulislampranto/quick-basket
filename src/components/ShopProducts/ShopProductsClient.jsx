@@ -81,9 +81,11 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
       }
     } catch (error) {
       setErrorItem(itemId);
+
       setTimeout(() => {
         setErrorItem(null);
       }, 3000);
+
       setLoadingItem(null);
       console.error("Error accepting order item:", error);
     }
@@ -122,7 +124,7 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
 
   return (
     <div className="container px-5">
-        <div className="flex bg-black p-1 mb-4 w-96 mt-10 md:mt-0">
+        <div className="flex bg-black p-1 mb-4 w-80 md:w-96 mt-10 md:mt-0">
             <button
                 type="button"
                 onClick={() => setType('products')}

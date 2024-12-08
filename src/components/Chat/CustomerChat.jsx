@@ -72,14 +72,14 @@ const CustomerChat = ({ shop, customerId }) => {
                 }
             </div>
             
-            <div className={`bg-white p-5 border-2 border-black z-50 fixed bottom-20 right-5 transition-all duration-500 ease-in-out ${openChat ? ' opacity-100': 'opacity-0'}`}>
+            <div className={`bg-white p-5 border-2 border-black fixed bottom-20 right-5 transition-all duration-500 ease-in-out ${openChat ? ' opacity-100 z-50': 'opacity-0 z-30'}`}>
                 
                 <h2 className=" border-2 border-black p-2 ">Chat with <strong>{shop.name}</strong> </h2>
                 
                 <ul className="h-[300px] overflow-y-scroll space-y-1 py-3">
                     {messages.map((msg, index) => (
                         <li ref={lastMessageRef} key={index} className={`flex text-white ${msg.sender?._id || msg.sender === customerId ? "justify-end" : "justify-start"}`}>
-                            <strong className={`p-2 rounded-lg ${msg.sender?._id || msg.sender === customerId ? "bg-blue-500" : " bg-gray-500"}`} >{msg.message}</strong> 
+                            <strong className={`p-2 rounded-lg ${msg.sender?._id || msg.sender === customerId ? " border-2 border-black text-black" : " bg-gray-800"}`} >{msg.message}</strong> 
                         </li>
                     ))}
                 </ul>

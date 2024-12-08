@@ -10,18 +10,18 @@ const ShopChat = ({ shopId }) => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fetchChats = async () => {
-      try {
+    (async () => {
+        try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/shop/${shopId}`);
             const data = await response.json();
-            
+        
             setChats(data.chats);
+        
         } catch (error) {
-            console.error("Failed to fetch chats:", error);
+            console.error("`Failed` to fetch chats:", error);
         }
-    };
+    })()
 
-    fetchChats();
   }, [shopId]);
 
   const fetchMessages = async (chatId) => {
