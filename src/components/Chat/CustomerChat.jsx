@@ -3,6 +3,9 @@ import io from "socket.io-client";
 import { CiChat1 } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 import { BsSend } from "react-icons/bs";
+import MessageInput from "./MessageInput";
+import Messeges from "./Messeges";
+import Messages from "./Messages";
 
 
 
@@ -17,6 +20,7 @@ const CustomerChat = ({ shop, customerId }) => {
 
     const initiateChat = async () => {
         seOpenChat(true)
+
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/create`, {
                 method: "POST",
@@ -76,23 +80,9 @@ const CustomerChat = ({ shop, customerId }) => {
                 
                 <h2 className=" border-2 border-black p-2 ">Chat with <strong>{shop.name}</strong> </h2>
                 
-                <ul className="h-[300px] overflow-y-scroll space-y-1 py-3">
-                    {messages.map((msg, index) => (
-                        <li ref={lastMessageRef} key={index} className={`flex text-white ${msg.sender?._id || msg.sender === customerId ? "justify-end" : "justify-start"}`}>
-                            <strong className={`p-2 rounded-lg ${msg.sender?._id || msg.sender === customerId ? " border-2 border-black text-black" : " bg-gray-800"}`} >{msg.message}</strong> 
-                        </li>
-                    ))}
-                </ul>
+                <Messages messages={messages} userId={customerId} lastMessageRef={lastMessageRef}  />
 
-                <div  className=" flex items-center">
-                    <input
-                        className=" border-2 p-2 border-black border-r-0 focus:outline-0"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Type a message..."
-                    />
-                    <button onClick={sendMessage} className=" hover:text-white hover:bg-blue-500 text-blue-500 border-2 p-2 border-black hover:border-blue-500"><BsSend className=" w-6 h-6" /></button>
-                </div>
+                <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
             </div>
 
         </div>

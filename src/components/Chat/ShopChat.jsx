@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
+import MessageInput from "./MessageInput";
+import Messages from "./Messages";
 
 const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);
 
@@ -8,6 +10,9 @@ const ShopChat = ({ shopId }) => {
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [activeChatId, setActiveChatId] = useState(null);
+  const lastMessageRef = useRef();
+
 
   useEffect(() => {
     (async () => {
@@ -25,6 +30,7 @@ const ShopChat = ({ shopId }) => {
   }, [shopId]);
 
   const fetchMessages = async (chatId) => {
+    setActiveChatId(chatId)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/${chatId}`);
       const data = await response.json();
@@ -39,6 +45,7 @@ const ShopChat = ({ shopId }) => {
 
   const sendMessage = () => {
     if (!message.trim() || !selectedChatId) return;
+    if (!shopId) return;
 
     socket.emit("sendMessage", { chatId: selectedChatId, sender: shopId, message });
     setMessage("");
@@ -56,31 +63,27 @@ const ShopChat = ({ shopId }) => {
     };
   }, [selectedChatId]);
 
+  useEffect(() => {
+		setTimeout(() => {
+			lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+		}, 100);
+	}, [messages]);
+
   return (
     <div className=" flex">
-      <div className=" flex flex-col border gap-5">
-        <h3>Chats</h3>
+      <div className="flex flex-col border-2 border-black bg-black">
         {chats.map((chat) => (
-          <button key={chat._id} onClick={() => fetchMessages(chat._id)}>
-            Chat with {chat.customer.name}
+          <button className={`p-2 ${chat._id === activeChatId ? ' bg-white' : 'text-white' }`} key={chat._id} onClick={() => fetchMessages(chat._id)}>
+              {chat.customer.name}
           </button>
         ))}
       </div>
-      <div>
-        <h3>Messages</h3>
-        <div style={{ height: "300px", overflowY: "scroll" }}>
-          {messages.map((msg, index) => (
-            <div key={index}>
-              <strong>{msg.sender === shopId ? "You" : "Customer"}:</strong> {msg.message}
-            </div>
-          ))}
-        </div>
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a message..."
-        />
-        <button onClick={sendMessage}>Send</button>
+
+      <div className=" border-2 border-black border-l-0 p-2">
+
+        <Messages messages={messages} userId={shopId} lastMessageRef={lastMessageRef}  />
+
+        <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>
   );

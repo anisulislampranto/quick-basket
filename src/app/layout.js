@@ -21,12 +21,14 @@ const montserrat = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} font-montserrat`}>
+      <body
+        className={`${montserrat.variable} font-montserrat scroll-smooth flex flex-col min-h-screen`}
+      >
         <StoreProvider>
           <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>
             <GlobalLoader>
               <HeaderClient />
-              {children}
+              <main className="flex-grow py-10">{children}</main>
               <Footer />
             </GlobalLoader>
           </GoogleOAuthProvider>

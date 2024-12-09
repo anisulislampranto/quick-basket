@@ -8,6 +8,7 @@ import EditProduct from '../EditProduct/EditProduct';
 import DrawerWrapper from '../ui/DrawerWrapper';
 import { useSelector } from 'react-redux';
 import ShopChat from '../Chat/ShopChat';
+import Link from 'next/link';
 
 function CategoryProducts({ title, products }) {
   return (
@@ -123,30 +124,34 @@ export default function ShopProducts({ products, type, setType, shopOrders, fetc
   };
 
   return (
-    <div className="container px-5">
-        <div className="flex bg-black p-1 mb-4 w-80 md:w-96 mt-10 md:mt-0">
-            <button
-                type="button"
-                onClick={() => setType('products')}
-                className={`flex-1 p-1 ${type === 'products' ? 'bg-white text-black' : ' bg-black text-white'}`}
-            >
-                Products
-            </button>
-            <button
-                type="button"
-                onClick={() => setType('orders')}
-                className={`flex-1 p-1 ${type === 'orders' ? 'bg-white text-black' : 'bg-black text-white'}`}
-            >
-                Orders
-            </button>
-            <button
-                type="button"
-                onClick={() => setType('messages')}
-                className={`flex-1 p-1 ${type === 'messages' ? 'bg-white text-black' : 'bg-black text-white'}`}
-            >
-                Messages
-            </button>
-        </div>
+    <div className="container px-5 ">
+          <div className="relative flex bg-black p-1 mb-4 w-80 md:w-96 mt-10 md:mt-0 text-center">
+              <div id='menuBar' className='absolute -top-32 md:-top-40'></div>
+              <a
+                  href={'#menuBar'}
+                  type="button"
+                  onClick={() => setType('products')}
+                  className={`flex-1 p-1 ${type === 'products' ? 'bg-white text-black' : ' bg-black text-white'}`}
+              >
+                  Products
+              </a>
+              <a
+                  href={'#menuBar'}
+                  type="button"
+                  onClick={() => setType('orders')}
+                  className={`flex-1 p-1 ${type === 'orders' ? 'bg-white text-black' : 'bg-black text-white'}`}
+              >
+                  Orders
+              </a>
+              <a
+                  href={'#menuBar'}
+                  type="button"
+                  onClick={() => setType('messages')}
+                  className={`flex-1 p-1 ${type === 'messages' ? 'bg-white text-black' : 'bg-black text-white'}`}
+              >
+                  Messages
+              </a>
+          </div>
 
         {type === 'products' ? (
           categories.map((category) => (
