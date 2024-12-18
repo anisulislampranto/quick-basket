@@ -50,7 +50,7 @@ export default function ProductDetailsClient({productDetails}) {
 
                     <p>${productDetails.price}</p>
                     {
-                        user.type === 'customer' &&
+                        user?.type === 'customer' &&
                         <>
                             <div className=' flex items-center gap-2'> 
                                 <button className=' px-2 border hover:border-red-600 hover:text-red-600' onClick={() => setQuantity(quantity - 1)}>-</button> 
@@ -76,13 +76,6 @@ export default function ProductDetailsClient({productDetails}) {
                         </div>
                         <p>{productDetails.shop.name}</p>
                     </div>
-                    {
-                        console.log( '${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails?.shop?.logo}', `${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails?.shop?.logo}`)
-                    }
-
-                    {
-                        console.log( '${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.images?.[0]}', `${process.env.NEXT_PUBLIC_BACKEND_URL}/${productDetails.images?.[0]}`)
-                    }
 
                 </div>
             </div>

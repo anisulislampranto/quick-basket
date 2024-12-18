@@ -26,7 +26,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "quick-basket-backend-yam4.onrender.com",
-        // pathname: "/uploads/**",
       },
     ],
   },

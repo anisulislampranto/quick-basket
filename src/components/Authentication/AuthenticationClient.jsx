@@ -64,7 +64,7 @@ export default function AuthenticationClient() {
           }
     
           if (userData.data?.email) {
-    
+            toast({title: "Signed In Successfully"})
             localStorage.setItem('quickBasketToken', userData.data.token)
             // localStorage.setItem('user', JSON.stringify(userData.data));
             dispatch(setUser(userData.data))
