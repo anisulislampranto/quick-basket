@@ -69,6 +69,9 @@ const ShopChat = ({ shopId }) => {
 		}, 100);
 	}, [messages]);
 
+  console.log('messages', messages);
+
+
   return (
     <div className=" flex">
       <div className="flex flex-col border-2 border-black bg-black">

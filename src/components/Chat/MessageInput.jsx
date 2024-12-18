@@ -3,9 +3,9 @@ import { BsSend } from 'react-icons/bs'
 
 export default function MessageInput({message, setMessage, sendMessage}) {
     return (
-        <div className=" flex items-center">
+        <div className=" flex items-center w-full">
             <input
-                className=" border-2 p-2 border-black border-r-0 focus:outline-0"
+                className=" border-2 p-2 border-black border-r-0 focus:outline-0 w-[90%]"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message..."

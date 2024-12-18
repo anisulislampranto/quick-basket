@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { CiChat1 } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
-import { BsSend } from "react-icons/bs";
 import MessageInput from "./MessageInput";
-import Messeges from "./Messeges";
 import Messages from "./Messages";
 
 
@@ -66,6 +64,8 @@ const CustomerChat = ({ shop, customerId }) => {
 			lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
 		}, 100);
 	}, [messages]);
+
+    
 
 
     return (
