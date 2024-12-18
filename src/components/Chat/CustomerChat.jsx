@@ -43,7 +43,7 @@ const CustomerChat = ({ shop, customerId }) => {
     const sendMessage = () => {
         if (!message.trim()) return;
 
-        socket.emit("sendMessage", { chatId, sender: customerId, message });
+        socket.emit("sendMessage", { chatId, sender: customerId, message, senderType: 'User' });
         setMessage("");
     };
 

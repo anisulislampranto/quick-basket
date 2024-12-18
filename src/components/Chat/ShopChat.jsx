@@ -12,6 +12,7 @@ const ShopChat = ({ shopId }) => {
   const [message, setMessage] = useState("");
   const [activeChatId, setActiveChatId] = useState(null);
   const lastMessageRef = useRef();
+  const senderType = 'Shop'
 
   console.log('messages', messages);
 
@@ -38,7 +39,6 @@ const ShopChat = ({ shopId }) => {
       const data = await response.json();
 
       console.log('dataObject', data);
-      
 
       setMessages(data.messages || []);
       setSelectedChatId(chatId);
@@ -53,7 +53,8 @@ const ShopChat = ({ shopId }) => {
     if (!message.trim() || !selectedChatId) return;
     if (!shopId) return;
 
-    socket.emit("sendMessage", { chatId: selectedChatId, sender: shopId, message });
+    socket.emit("sendMessage", { chatId: selectedChatId, sender: shopId, message, senderType: 'Shop' });
+
     setMessage("");
   };
 
