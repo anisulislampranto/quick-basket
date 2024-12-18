@@ -261,6 +261,8 @@ export default function OrdersPage() {
                             }
                           />
                         }
+
+                        {/* Not working Review order */}
                         {
                           (order.orderStatus === 'delivered' && user.type === 'customer') &&  
                             <Modal 
