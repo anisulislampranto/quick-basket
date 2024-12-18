@@ -13,6 +13,8 @@ const ShopChat = ({ shopId }) => {
   const [activeChatId, setActiveChatId] = useState(null);
   const lastMessageRef = useRef();
 
+  console.log('messages', messages);
+
 
   useEffect(() => {
     (async () => {
@@ -34,6 +36,10 @@ const ShopChat = ({ shopId }) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/${chatId}`);
       const data = await response.json();
+
+      console.log('dataObject', data);
+      
+
       setMessages(data.messages || []);
       setSelectedChatId(chatId);
 

@@ -33,7 +33,7 @@ export default function ProductDetailsClient({productDetails}) {
                     <ul className=' flex gap-2'>
                         {
                             productDetails.images?.map((image) =>
-                                <li onClick={() => setSelectedImage(image)} className={`relative h-20 w-20 border ${selectedImage === image && 'border-black'}`}>
+                                <li key={image} onClick={() => setSelectedImage(image)} className={`relative h-20 w-20 border ${selectedImage === image && 'border-black'}`}>
                                     <Image className='absolute object-contain' src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${image}`} alt='image' fill />
                                 </li>
                             )
@@ -88,7 +88,7 @@ export default function ProductDetailsClient({productDetails}) {
                 <AccordionWrapper title={'Reviews'}>
                     <ul className='flex flex-col gap-5'>
                         {productDetails?.reviews?.map((el) => 
-                            <li className=' flex flex-col gap-2'>
+                            <li key={el} className=' flex flex-col gap-2'>
                                 <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
                                     {[...Array(5)].map((_, index) => (
                                     <span
