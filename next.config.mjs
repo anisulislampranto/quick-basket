@@ -25,23 +25,8 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "i.ibb.co",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "college-booking-backend-production-d4ba.up.railway.app",
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        hostname: "quick-basket-backend-yam4.onrender.com",
+        // pathname: "/uploads/**",
       },
     ],
   },
