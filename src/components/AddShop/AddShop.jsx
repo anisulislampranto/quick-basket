@@ -1,7 +1,6 @@
 import React from 'react';
 import ShopImage from '../../assets/shop-removebg-preview.png'
 import DropBorder from '@/components/ui/DropBorder';
-import { useRouter } from 'next/navigation';
 import useAddShop from '@/hooks/useAddShop';
 import { GiShop } from "react-icons/gi";
 import { useForm } from 'react-hook-form';
@@ -11,7 +10,7 @@ import Loader2 from '@/utils/Loader2';
 
 
 export default function AddShopClient() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const { handleAddShop,  addShopLoading, addShopError, addShopSuccess} = useAddShop();
 
 

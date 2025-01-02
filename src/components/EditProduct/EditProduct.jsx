@@ -4,7 +4,6 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { categories } from '../AddProduct/AddProduct';
 import Button from '../ui/Button';
-import { DrawerDescription, DrawerHeader, DrawerTitle } from '../ui/drawer';
 
 export default function EditProduct({product}) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();

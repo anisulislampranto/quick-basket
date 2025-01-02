@@ -14,8 +14,6 @@ import SheetWrapper from '../ui/SheetWrapper';
 import CartData from '../CartData/CartData';
 import { AlertWrapper } from '../ui/AlertWrapper';
 import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
-import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
-import { useRouter } from 'next/navigation';
 
 const navLinks = [
     {
@@ -41,7 +39,6 @@ export default function HeaderClient() {
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const { cartProducts } = useSelector((state) => state.cartProducts);
-    const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('quickBasketToken')

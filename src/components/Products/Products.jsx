@@ -1,9 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import DropBorder from '../ui/DropBorder';
-import { FaEdit } from "react-icons/fa";
-import EditProduct from '../EditProduct/EditProduct';
-import DrawerWrapper from '../ui/DrawerWrapper';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 

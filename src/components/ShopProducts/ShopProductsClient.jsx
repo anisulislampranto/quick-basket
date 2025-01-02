@@ -8,7 +8,6 @@ import EditProduct from '../EditProduct/EditProduct';
 import DrawerWrapper from '../ui/DrawerWrapper';
 import { useSelector } from 'react-redux';
 import ShopChat from '../Chat/ShopChat';
-import Link from 'next/link';
 
 function CategoryProducts({ title, products }) {
   return (
