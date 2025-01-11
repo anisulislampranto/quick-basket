@@ -43,6 +43,7 @@ const userSlice = createSlice({
 
     clearUser: () => initialState,
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchMe.pending, (state, action) => {
